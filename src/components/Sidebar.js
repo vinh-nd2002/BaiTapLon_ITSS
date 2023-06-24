@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { apiGetCategories } from "../apis/category";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 
