@@ -1,5 +1,13 @@
 import React from "react";
-import { Banner, BestSeller, FlashSale, Sidebar } from "../../components";
+import {
+  Banner,
+  BestSeller,
+  FeatureProduct,
+  FlashSale,
+  Services,
+  ShopMall,
+  Sidebar,
+} from "../../components";
 
 const Home = () => {
   return (
@@ -13,8 +21,11 @@ const Home = () => {
           <Banner />
         </div>
       </div>
-      <BestSeller />
       <FlashSale />
+      <BestSeller />
+      <FeatureProduct />
+      <ShopMall />
+      <Services />
     </div>
   );
 };

@@ -7,3 +7,7 @@ export { default as ProductCard } from "./ProductCard";
 export { default as SelectOption } from "./SelectOption";
 export { default as FlashSale } from "./FlashSale";
 export { default as CountDown } from "./CountDown";
+export { default as ShopMall } from "./ShopMall";
+export { default as FeatureProduct } from "./FeatureProduct";
+export { default as ProductItem } from "./ProductItem";
+export { default as Services } from "./Services";
