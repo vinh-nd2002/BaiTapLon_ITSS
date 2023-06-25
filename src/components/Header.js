@@ -3,7 +3,7 @@ import icons from "./../utils/icons";
 import { Link } from "react-router-dom";
 import path from "./../utils/path";
 const Header = () => {
-  const { RiPhoneFill, AiOutlineMail, BsFillHandbagFill, FaUserCircle } = icons;
+  const { RiPhoneFill, MdEmail, BsFillHandbagFill, FaUserCircle } = icons;
   return (
     <div className="w-main h-[110px] py-[35px] flex justify-between">
       {/* <img src="" alt="logo" className="object-contain" /> */}
@@ -22,7 +22,7 @@ const Header = () => {
 
         <div className="flex flex-col items-center px-6 border-r">
           <span className="flex gap-2 items-center">
-            <AiOutlineMail color="red" />
+            <MdEmail color="red" />
             <span className="font-semibold">nhom10_ITSS_VN@gmail.com</span>
           </span>
           <span>Online Support 24/7</span>

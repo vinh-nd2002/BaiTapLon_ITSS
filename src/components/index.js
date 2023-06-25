@@ -11,3 +11,5 @@ export { default as ShopMall } from "./ShopMall";
 export { default as FeatureProduct } from "./FeatureProduct";
 export { default as ProductItem } from "./ProductItem";
 export { default as Services } from "./Services";
+export { default as TopHeader } from "./TopHeader";
+export { default as Footer } from "./Footer";
