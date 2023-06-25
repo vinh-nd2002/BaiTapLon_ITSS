@@ -1,8 +1,8 @@
 import React from "react";
 
-const SelectOption = ({ icon }) => {
+const SelectOption = ({ icon, title }) => {
   return (
-    <div className="w-10 h-10 bg-white rounded-full border-gray-800 border-[1px] shadow-md flex justify-center items-center cursor-pointer hover:bg-gray-800 hover:text-white duration-300">
+    <div className="w-10 h-10 bg-white rounded-full border-main border-[1px] shadow-md flex text-main justify-center items-center cursor-pointer hover:bg-main hover:text-white duration-300 " title={title}>
       {icon}
     </div>
   );

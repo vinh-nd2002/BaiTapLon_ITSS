@@ -10,10 +10,10 @@ var settings = {
   dots: false,
   infinite: true,
   speed: 500,
-  slidesToShow: 5,
-  slidesToScroll: 2,
+  slidesToShow: 6,
+  slidesToScroll: 1,
   autoplay: true,
-  autoplaySpeed: 3000,
+  autoplaySpeed: 2500,
   cssEase: "linear",
   rows: 2,
   arrows: false,
@@ -81,12 +81,12 @@ const FlashSale = () => {
     <div>
       <div className=" items-center border-main border-b-2 mb-4">
         <div className=" flex justify-start items-center gap-2 ">
-          <span
+          <h3
             className="flex justify-center items-center font-medium capitalize w-[200px] text-center p-5 cursor-pointer   border-t-[1px] bg-main text-white 
             "
           >
             Flash Sale
-          </span>
+          </h3>
           <div className="flex gap-1">
             <CountDown unit={"Hours"} number={hours} />
             <CountDown unit={"Minutes"} number={minutes} />

@@ -15,7 +15,7 @@ const ProductCard = ({ product, labelTab, flashSale }) => {
   return (
     <div className="w-full px-[10px] mb-[10px]">
       <div
-        className="border border-gray-400 w-full py-[10px] "
+        className="border border-gray-400 w-full py-[5px] "
         onMouseEnter={(e) => {
           e.stopPropagation();
           setIsShow(true);
@@ -39,7 +39,7 @@ const ProductCard = ({ product, labelTab, flashSale }) => {
               "https://t3.ftcdn.net/jpg/04/34/72/82/360_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg"
             }
             alt={product.title}
-            className="h-[250px] object-contain"
+            className="h-[200px] object-contain"
           />
           <img
             src={
@@ -55,10 +55,13 @@ const ProductCard = ({ product, labelTab, flashSale }) => {
             }`}
           />
         </div>
-        <div className="flex flex-col gap-1 mt-15[px] items-start px-[15px] ">
-          <span className="line-clamp-1">{product?.title}</span>
-          <span> ${formatMoney(product?.price)}</span>
-          <span className="flex ">
+        <div className="flex flex-col items-start px-[15px] ">
+          <span className="line-clamp-1 text-[10px]">{product?.title}</span>
+          <span className="text-xs text-main">
+            {" "}
+            ${formatMoney(product?.price)}
+          </span>
+          <span className="flex text-[10px] ">
             {renderStarFromNumber(product?.totalRatings)}
           </span>
         </div>

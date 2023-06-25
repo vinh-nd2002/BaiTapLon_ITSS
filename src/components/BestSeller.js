@@ -8,7 +8,7 @@ var settings = {
   dots: false,
   infinite: true,
   speed: 500,
-  slidesToShow: 5,
+  slidesToShow: 6,
   slidesToScroll: 2,
   autoplay: true,
   autoplaySpeed: 3000,
@@ -55,7 +55,7 @@ const BestSeller = () => {
     <div className="mt-5 mb-10">
       <div className="flex text-base border-main border-b-2 mb-3 ">
         {tabs.map((ele) => (
-          <span
+          <h3
             key={ele.id}
             className={`font-medium capitalize w-[200px] text-center p-5 cursor-pointer border-gray-400 border-x-[1px] border-t-[1px] ${
               activeTab === ele.id
@@ -67,7 +67,7 @@ const BestSeller = () => {
             onClick={() => setActiveTab(ele.id)}
           >
             {ele.name}
-          </span>
+          </h3>
         ))}
       </div>
       <div>
