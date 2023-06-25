@@ -6,3 +6,4 @@ export { default as BestSeller } from "./BestSeller";
 export { default as ProductCard } from "./ProductCard";
 export { default as SelectOption } from "./SelectOption";
 export { default as FlashSale } from "./FlashSale";
+export { default as CountDown } from "./CountDown";

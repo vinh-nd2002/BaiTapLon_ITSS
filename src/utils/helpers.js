@@ -1,21 +1,14 @@
 import icons from "./icons";
 
-// Array(5)
-// .fill()
-// .map((_, i) => {
-//   const ratingValue = i + 1;
-//   return (
-//     <div>
-//       <AiFillStar
-//         className="star"
-//         color={ratingValue <= rating ? "#ffc107" : "#e4e5e9"}
-//         size={25}
-//       />
-//     </div>
-//   );
-// });
-
 const { AiOutlineStar, AiFillStar } = icons;
+
+export const secondsToHms = (seconds) => {
+  seconds = Number(seconds) / 1000;
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = Math.floor((seconds % 3600) % 60);
+  return { h, m, s };
+};
 
 export const slugifyTitle = (title) => {
   //Đổi chữ hoa thành chữ thường
