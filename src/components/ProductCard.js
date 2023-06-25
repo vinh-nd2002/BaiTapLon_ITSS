@@ -15,7 +15,7 @@ const ProductCard = ({ product, labelTab, flashSale }) => {
   return (
     <div className="w-full px-[10px] mb-[10px]">
       <div
-        className="border border-gray-400 w-full py-[10px]"
+        className="border border-gray-400 w-full py-[10px] "
         onMouseEnter={(e) => {
           e.stopPropagation();
           setIsShow(true);
@@ -25,9 +25,9 @@ const ProductCard = ({ product, labelTab, flashSale }) => {
           setIsShow(false);
         }}
       >
-        <div className="relative w-full">
+        <div className="relative w-full ">
           {isShow && (
-            <div className="absolute bottom-0 right-0 left-0 flex justify-center items-center gap-4 animate-slide-top">
+            <div className=" absolute bottom-0 right-0 left-0 flex justify-center items-center gap-4 animate-slide-top ">
               <SelectOption icon={<BsFillHandbagFill />} />
               <SelectOption icon={<AiFillEye />} />
             </div>
