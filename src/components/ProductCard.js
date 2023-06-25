@@ -1,16 +1,68 @@
-import React from "react";
+import React, { useState } from "react";
+import { formatMoney, renderStarFromNumber } from "./../utils/helpers";
+import bestSellerLabel from "./../assets/best-seller.png";
+import newLabel from "./../assets/new.png";
+import flashSaleLabel from "./../assets/flash_sale.png";
+import SelectOption from "./SelectOption";
 
-const ProductCard = ({ product }) => {
+import icons from "./../utils/icons";
+
+const { BsFillHandbagFill, AiFillEye } = icons;
+
+const ProductCard = ({ product, labelTab, flashSale }) => {
+  const [isShow, setIsShow] = useState(false);
+
   return (
-    <div className="w-1/3 ">
-      <img
-        src={
-          product?.images[0] ||
-          "https://cdn2.cellphones.com.vn/x358,webp,q100/media/catalog/product/g/t/gtt_7766_3__1.jpg"
-        }
-        alt={product.title}
-        className="w-full object-contain"
-      />
+    <div className="w-full px-[10px] mb-[10px]">
+      <div
+        className="border border-gray-400 w-full py-[10px]"
+        onMouseEnter={(e) => {
+          e.stopPropagation();
+          setIsShow(true);
+        }}
+        onMouseLeave={(e) => {
+          e.stopPropagation();
+          setIsShow(false);
+        }}
+      >
+        <div className="relative w-full">
+          {isShow && (
+            <div className="absolute bottom-0 right-0 left-0 flex justify-center items-center gap-4 animate-slide-top">
+              <SelectOption icon={<BsFillHandbagFill />} />
+              <SelectOption icon={<AiFillEye />} />
+            </div>
+          )}
+
+          <img
+            src={
+              product?.thumb ||
+              "https://t3.ftcdn.net/jpg/04/34/72/82/360_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg"
+            }
+            alt={product.title}
+            className="h-[250px] object-contain"
+          />
+          <img
+            src={
+              flashSale ? flashSaleLabel : labelTab ? bestSellerLabel : newLabel
+            }
+            alt="new"
+            className={`absolute object-cover top-[-5px] ${
+              flashSale
+                ? "w-[60px] "
+                : labelTab
+                ? "left-[-10px] w-[70px]"
+                : "left-0 w-[40px] top-0 "
+            }`}
+          />
+        </div>
+        <div className="flex flex-col gap-1 mt-15[px] items-start px-[15px] ">
+          <span className="line-clamp-1">{product?.title}</span>
+          <span> ${formatMoney(product?.price)}</span>
+          <span className="flex ">
+            {renderStarFromNumber(product?.totalRatings)}
+          </span>
+        </div>
+      </div>
     </div>
   );
 };
