@@ -1,4 +1,23 @@
-const slugifyTitle = (title) => {
+import icons from "./icons";
+
+// Array(5)
+// .fill()
+// .map((_, i) => {
+//   const ratingValue = i + 1;
+//   return (
+//     <div>
+//       <AiFillStar
+//         className="star"
+//         color={ratingValue <= rating ? "#ffc107" : "#e4e5e9"}
+//         size={25}
+//       />
+//     </div>
+//   );
+// });
+
+const { AiOutlineStar, AiFillStar } = icons;
+
+export const slugifyTitle = (title) => {
   //Đổi chữ hoa thành chữ thường
   var slug;
   slug = title.toLowerCase();
@@ -31,4 +50,17 @@ const slugifyTitle = (title) => {
   return slug;
 };
 
-module.exports = slugifyTitle;
+export const formatMoney = (number) =>
+  Number(number.toFixed(1)).toLocaleString();
+
+export const renderStarFromNumber = (number) => {
+  const stars = [];
+
+  for (let i = 0; i < 5; i++) {
+    i <= +number
+      ? stars.push(<AiFillStar key={i} color="orange" />)
+      : stars.push(<AiOutlineStar key={i} color="orange" />);
+  }
+
+  return stars;
+};

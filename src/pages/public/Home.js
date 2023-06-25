@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Banner, BestSeller, Sidebar } from "../../components";
+import React from "react";
+import { Banner, BestSeller, FlashSale, Sidebar } from "../../components";
 
 const Home = () => {
   return (
-    <div>
+    <div className="mb-[100px]">
       <div className="w-main flex mb-10">
         <div className="flex flex-col gap-5 flex-auto w-[20%] ">
           <Sidebar />
@@ -14,6 +14,7 @@ const Home = () => {
         </div>
       </div>
       <BestSeller />
+      <FlashSale />
     </div>
   );
 };
