@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import * as actions from "./asyncAction";
+import * as actions from "./categoryAction";
 
 export const appSlice = createSlice({
-  name: "app",
+  name: "category",
   initialState: {
     isLoading: false,
     categories: null,

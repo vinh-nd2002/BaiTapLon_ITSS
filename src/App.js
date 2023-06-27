@@ -12,7 +12,7 @@ import {
 } from "./pages/public";
 import path from "./utils/path";
 import { useDispatch } from "react-redux";
-import { getCategories } from "./stores/asyncAction";
+import { getCategories } from "./stores/category/categoryAction";
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {

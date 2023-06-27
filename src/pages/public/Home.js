@@ -8,8 +8,11 @@ import {
   ShopMall,
   Sidebar,
 } from "../../components";
+import { useSelector } from "react-redux";
 
 const Home = () => {
+  const { isLoggedIn, current } = useSelector((state) => state.user);
+  const { categories } = useSelector((state) => state.category);
   return (
     <div className="mb-[100px]">
       <div className="w-main flex mb-10">
