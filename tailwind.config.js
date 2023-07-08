@@ -16,12 +16,12 @@ module.exports = {
         main: ["Poppins", "sans-serif"],
       },
       flex: {
-        "2": "2 2 0%",
-        "3": "3 3 0%",
-        "4": "4 4 0%",
-        "5": "5 5 0%",
-        "6": "6 6 0%",
-        "7": "7 7 0%",
+        2: "2 2 0%",
+        3: "3 3 0%",
+        4: "4 4 0%",
+        5: "5 5 0%",
+        6: "6 6 0%",
+        7: "7 7 0%",
       },
       keyframes: {
         "slide-top": {
@@ -39,6 +39,13 @@ module.exports = {
         "slide-top":
           "slide-top 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;",
       },
+    },
+    listStyleType: {
+      none: "none",
+      disc: "disc",
+      decimal: "decimal",
+      square: "square",
+      roman: "upper-roman",
     },
   },
   plugins: [],

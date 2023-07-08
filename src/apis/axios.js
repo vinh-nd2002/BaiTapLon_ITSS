@@ -1,13 +1,25 @@
 import axios from "axios";
 const instance = axios.create({
-  baseURL: "http://localhost:5000/api/v1/",
+  // baseURL: "http://localhost:5000/api/v1/",
+  baseURL: "http://localhost:8000/api/",
 });
 
 // Add a request interceptor
 instance.interceptors.request.use(
   function (config) {
-    // Do something before request is sent
-    return config;
+    // let localStorageData = localStorage.getItem("persist:user");
+
+    // if (localStorageData && typeof localStorageData === "string") {
+    //   localStorageData = JSON.parse(localStorageData);
+    //   console.log("localStorageData", localStorageData);
+    //   const accessToken = JSON.parse(localStorageData?.accessToken);
+    //   console.log("accessToken", accessToken);
+    //   config.headers = { authorization: `Bearer ${accessToken}` };
+    const token = localStorage.getItem("accessToken");
+    if (token !== null && token !== undefined) {
+      config.headers.Authorization = `Bearer ${token}`;
+      return config;
+    } else return config;
   },
   function (error) {
     // Do something with request error

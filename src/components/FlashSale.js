@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import ProductCard from "./ProductCard";
-import { getProducts } from "../apis/product";
 import CountDown from "./CountDown";
 import moment from "moment";
 import { secondsToHms } from "../utils/helpers";
+import { useDispatch, useSelector } from "react-redux";
+import { getProducts } from "../stores/product/productAction";
 
 var settings = {
   dots: false,
@@ -22,34 +23,24 @@ var settings = {
 let idInterval;
 
 const FlashSale = () => {
-  const [products, setProducts] = useState(null);
+  const { products } = useSelector((state) => state.product);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [expiry, setExpiry] = useState(false);
-  const fetchProducts = async () => {
-    const response = await getProducts();
-    if (response.success) {
-      setProducts(response);
 
-      const today = `${moment().format("MM/DD/YYYY")} 00:00:00`;
-
-      const s =
-        new Date(today).getTime() - new Date().getTime() + 24 * 60 * 60 * 1000;
-
-      const number = secondsToHms(s);
-      setHours(number.h);
-      setMinutes(number.m);
-      setSeconds(number.s);
-    } else {
-      setHours(0);
-      setMinutes(5);
-      setSeconds(0);
-    }
+  const countDown = () => {
+    const today = `${moment().format("MM/DD/YYYY")} 00:00:00`;
+    const s =
+      new Date(today).getTime() - new Date().getTime() + 24 * 60 * 60 * 1000;
+    const number = secondsToHms(s);
+    setHours(number.h);
+    setMinutes(number.m);
+    setSeconds(number.s);
   };
 
   useEffect(() => {
-    fetchProducts();
+    countDown();
   }, []);
 
   useEffect(() => {
@@ -74,7 +65,7 @@ const FlashSale = () => {
 
   useEffect(() => {
     expiry && clearInterval(idInterval);
-    fetchProducts();
+    countDown();
   }, [expiry]);
 
   return (
@@ -82,7 +73,7 @@ const FlashSale = () => {
       <div className=" items-center border-main border-b-2 mb-4">
         <div className=" flex justify-start items-center gap-2 ">
           <h3
-            className="flex justify-center items-center font-medium capitalize w-[200px] text-center p-5 cursor-pointer   border-t-[1px] bg-main text-white 
+            className="flex justify-center items-center font-medium capitalize w-[200px] text-center p-5  border-t-[1px] bg-main text-white 
             "
           >
             Flash Sale
@@ -97,8 +88,8 @@ const FlashSale = () => {
       <div>
         <Slider {...settings}>
           {products &&
-            products.data.map((ele) => (
-              <ProductCard key={ele._id} product={ele} flashSale={true} />
+            products.map((ele) => (
+              <ProductCard key={ele.id} product={ele} flashSale={true} />
             ))}
         </Slider>
       </div>

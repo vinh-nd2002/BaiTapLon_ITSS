@@ -1,16 +1,17 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { AiFillFacebook } from "react-icons/ai";
 
 import background from "./../../assets/background.jpeg";
 import logo from "./../../assets/logo.png";
 import { Button, InputField } from "../../components";
-import { apiLogin, apiRegister } from "../../apis/user";
+import { apiGetCurrent, apiLogin, apiRegister } from "../../apis/user";
 import Swal from "sweetalert2";
 import path from "./../../utils/path";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginReducer } from "./../../stores/users/userSlice";
+import { validate } from "../../utils/helpers";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -35,35 +36,53 @@ export default function Login() {
       numberPhone: "",
     });
   };
+  const [invalidFields, setInvalidFields] = useState([]);
   const handleSubmit = useCallback(async () => {
     const { username, firstName, lastName, numberPhone, ...data } = payload;
-    if (isLogin === true) {
-      const response = await apiLogin(data);
-      console.log("login ==>>", response);
-      if (response.success) {
-        dispatch(loginReducer({ isLoggedIn: true, userData: response.data }));
-        navigate(`/${path.HOME}`);
+
+    const isValids = isLogin
+      ? validate(data, setInvalidFields)
+      : validate(payload, setInvalidFields);
+    if (isValids === 0) {
+      if (isLogin === true) {
+        const response = await apiLogin(data);
+        if (response.success) {
+          localStorage.setItem("accessToken", response.accessToken);
+          localStorage.setItem("isLoggedIn", true);
+          dispatch(
+            loginReducer({
+              isLoggedIn: response.success,
+              accessToken: response.accessToken,
+            })
+          );
+
+          const result = await apiGetCurrent();
+          console.log(result);
+          navigate(`/${path.HOME}`);
+        } else {
+          Swal.fire("Oops!", response.mes, "error");
+        }
       } else {
-        Swal.fire("Oops!", response.mes, "error");
-      }
-    } else {
-      const response = await apiRegister({
-        firstName,
-        lastName,
-        numberPhone,
-        ...data,
-      });
-      if (response.status) {
-        console.log(response);
-        Swal.fire("Congratulation", response.mes, "success").then(() => {
-          setIsLogin(true);
-          resetPayload();
+        const response = await apiRegister({
+          firstName,
+          lastName,
+          numberPhone,
+          ...data,
         });
-      } else {
-        Swal.fire("Oops!", response.mes, "error");
+        if (response.status) {
+          Swal.fire("Congratulation", response.mes, "success").then(() => {
+            setIsLogin(true);
+          });
+        } else {
+          Swal.fire("Oops!", response.mes, "error");
+        }
       }
     }
   }, [payload, isLogin]);
+
+  useEffect(() => {
+    resetPayload();
+  }, [isLogin]);
 
   return (
     <div className="relative w-full h-screen bg-zinc-900/90">
@@ -74,7 +93,10 @@ export default function Login() {
       />
       <div className="absolute top-1/2 left-1/2 flex justify-center items-center h-full translate-x-[-50%] translate-y-[-50%]">
         <form className="max-w-[400px] w-full mx-auto bg-white px-8 py-4 ">
-          <div className="flex justify-center items-center ">
+          <div
+            className="flex justify-center items-center cursor-pointer"
+            onClick={() => navigate(`/${path.HOME}`)}
+          >
             <img src={logo} alt="logo" className="h-[150px]" />
           </div>
 
@@ -89,6 +111,8 @@ export default function Login() {
                     value={payload.firstName}
                     nameKey="firstName"
                     label="First Name"
+                    invalidFields={invalidFields}
+                    setInvalidFields={setInvalidFields}
                   />
                 </div>
                 <div className="flex flex-col mb-2">
@@ -99,6 +123,8 @@ export default function Login() {
                     value={payload.lastName}
                     nameKey="lastName"
                     label="Last Name"
+                    invalidFields={invalidFields}
+                    setInvalidFields={setInvalidFields}
                   />
                 </div>
               </div>
@@ -110,6 +136,8 @@ export default function Login() {
                   value={payload.numberPhone}
                   nameKey="numberPhone"
                   label="Number Phone"
+                  invalidFields={invalidFields}
+                  setInvalidFields={setInvalidFields}
                 />
               </div>
               <div className="flex flex-col mb-2">
@@ -119,6 +147,8 @@ export default function Login() {
                   placeholder="Enter your username"
                   value={payload.username}
                   nameKey="username"
+                  invalidFields={invalidFields}
+                  setInvalidFields={setInvalidFields}
                 />
               </div>
             </div>
@@ -130,6 +160,8 @@ export default function Login() {
               value={payload.email}
               nameKey="email"
               setValue={setPayload}
+              invalidFields={invalidFields}
+              setInvalidFields={setInvalidFields}
             />
           </div>
           <div className="flex flex-col ">
@@ -139,6 +171,8 @@ export default function Login() {
               placeholder="Enter your password"
               value={payload.password}
               nameKey="password"
+              invalidFields={invalidFields}
+              setInvalidFields={setInvalidFields}
             />
           </div>
           {isLogin ? (
@@ -169,7 +203,6 @@ export default function Login() {
             {isLogin && (
               <div className="flex items-center">
                 <span className="mr-2 cursor-pointer text-xs hover:underline hover:text-blue-600">
-                  {" "}
                   Forgot password?
                 </span>
               </div>

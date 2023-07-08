@@ -44,9 +44,8 @@ export const slugifyTitle = (title) => {
 };
 
 export const formatMoney = (number) =>
-  Number(number.toFixed(1)).toLocaleString();
-
-export const renderStarFromNumber = (number) => {
+Number((+number).toFixed(2)).toLocaleString();
+export const renderStarFromNumber = (number, textSize) => {
   const stars = [];
 
   for (let i = 0; i < 5; i++) {
@@ -55,5 +54,58 @@ export const renderStarFromNumber = (number) => {
       : stars.push(<AiOutlineStar key={i} color="orange" />);
   }
 
-  return stars;
+  return <div className={`flex text-[${textSize}px]`}>{stars}</div>;
+};
+
+export const validate = (payload, setInvalidFields) => {
+  let invalids = 0;
+  const formatPayload = Object.entries(payload);
+
+  for (let arr of formatPayload) {
+    if (arr[1].trim() === "") {
+      invalids++;
+      setInvalidFields((prev) => [
+        ...prev,
+        { nameKey: arr[0], mes: "Require!" },
+      ]);
+    }
+  }
+
+  for (let arr of formatPayload) {
+    switch (arr[0]) {
+      case "email":
+        const regex =
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (!arr[1].match(regex)) {
+          invalids++;
+          setInvalidFields((prev) => [
+            ...prev,
+            { nameKey: arr[0], mes: "Email invalid!!!" },
+          ]);
+        }
+        break;
+      case "password":
+        if (arr[1].length < 8) {
+          invalids++;
+          setInvalidFields((prev) => [
+            ...prev,
+            {
+              nameKey: arr[0],
+              mes: "Password must be greater than 8 characters",
+            },
+          ]);
+        }
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  return invalids;
+};
+
+export const generateRange = (start, end) => {
+  const length = end - start + 1;
+  return Array.from({ length }, (_, index) => start + index);
 };

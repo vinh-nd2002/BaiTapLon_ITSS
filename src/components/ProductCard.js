@@ -7,73 +7,99 @@ import SelectOption from "./SelectOption";
 
 import icons from "./../utils/icons";
 import { Link } from "react-router-dom";
-
-import path from "./../utils/path";
+import path from "../utils/path";
+import { useDispatch } from "react-redux";
+import { addProductsToCart } from "../stores/cart/cartSlice";
 
 const { BsFillHandbagFill, AiFillEye } = icons;
 
 const ProductCard = ({ product, labelTab, flashSale }) => {
   const [isShow, setIsShow] = useState(false);
+  const dispatch = useDispatch();
+  const category = product.category.name;
+  const handleClickOption = (e, product) => {
+    e.preventDefault();
+    const shop = {
+      ...product.shop,
+      product: {
+        id: product.id,
+        name: product.name,
+        quantity: 1,
+        price: product.price,
+        thumb: product.thumbnail,
+      },
+    };
+    dispatch(addProductsToCart({ shop: shop }));
+  };
 
   return (
     <div className="w-full px-[10px] mb-[10px]">
-      <Link
-        to={`/${path.DETAIL_PRODUCT}/${product._id}/${product.title}}`}
-        onMouseEnter={(e) => {
-          e.stopPropagation();
-          setIsShow(true);
-        }}
-        onMouseLeave={(e) => {
-          e.stopPropagation();
-          setIsShow(false);
-        }}
-      >
-        <div className="border border-gray-400 w-full py-[5px] ">
-          <div className="relative w-full ">
-            {isShow && (
-              <div className=" absolute bottom-0 right-0 left-0 flex justify-center items-center gap-4 animate-slide-top ">
-                <SelectOption icon={<BsFillHandbagFill />} />
-                <SelectOption icon={<AiFillEye />} />
-              </div>
-            )}
+      {product && (
+        <Link
+          to={`/${path.DETAIL_PRODUCT}/${category.toLowerCase()}/${
+            product.id
+          }/${product.slug}`}
+          onMouseEnter={(e) => {
+            e.stopPropagation();
+            setIsShow(true);
+          }}
+          onMouseLeave={(e) => {
+            e.stopPropagation();
+            setIsShow(false);
+          }}
+        >
+          <div className="border border-gray-400 w-full py-[5px] ">
+            <div className="relative w-full ">
+              {isShow && (
+                <div className=" absolute bottom-0 right-0 left-0 flex justify-center items-center gap-4 animate-slide-top ">
+                  <SelectOption
+                    icon={<BsFillHandbagFill />}
+                    handleClickOption={handleClickOption}
+                    product={product}
+                  />
+                  <SelectOption icon={<AiFillEye />} />
+                </div>
+              )}
 
-            <img
-              src={
-                product?.thumb ||
-                "https://t3.ftcdn.net/jpg/04/34/72/82/360_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg"
-              }
-              alt={product.title}
-              className="h-[200px] object-contain"
-            />
-            <img
-              src={
-                flashSale
-                  ? flashSaleLabel
-                  : labelTab
-                  ? bestSellerLabel
-                  : newLabel
-              }
-              alt="new"
-              className={`absolute object-cover top-[-5px] ${
-                flashSale
-                  ? "w-[60px] "
-                  : labelTab
-                  ? "left-[-10px] w-[70px]"
-                  : "left-0 w-[40px] top-0 "
-              }`}
-            />
+              <img
+                src={
+                  // product.thumbnail
+                  "https://bloganchoi.com/wp-content/uploads/2019/12/vay-xep-ly-3.jpg" ||
+                  "https://t3.ftcdn.net/jpg/04/34/72/82/360_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg"
+                }
+                alt={product.name}
+                className="h-[200px] object-contain"
+              />
+              {labelTab && (
+                <img
+                  src={
+                    flashSale
+                      ? flashSaleLabel
+                      : labelTab
+                      ? bestSellerLabel
+                      : newLabel
+                  }
+                  alt="new"
+                  className={`absolute object-cover top-[-5px] ${
+                    flashSale
+                      ? "w-[60px] "
+                      : labelTab
+                      ? "left-[-10px] w-[70px]"
+                      : "left-0 w-[40px] top-0 "
+                  }`}
+                />
+              )}
+            </div>
+            <div className="flex flex-col items-start px-[15px] ">
+              <span className="line-clamp-1 text-[10px]">{product.name}</span>
+              <span className="text-xs text-main">
+                {formatMoney(product.price)} VND
+              </span>
+              {renderStarFromNumber(product.totalRatings, 10)}
+            </div>
           </div>
-          <div className="flex flex-col items-start px-[15px] ">
-            <span className="line-clamp-1 text-[10px]">{product?.title}</span>
-            <span className="text-xs text-main">
-              ${formatMoney(product?.price)}
-            </span>
-            <span className="flex text-[10px] ">
-              {renderStarFromNumber(product?.totalRatings)}
-            </span>
-          </div>
-        </div>
-      </Link>
+        </Link>
+      )}
     </div>
   );
 };

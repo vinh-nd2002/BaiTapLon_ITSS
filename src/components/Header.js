@@ -1,15 +1,18 @@
 import React from "react";
 import icons from "./../utils/icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import path from "./../utils/path";
+import logo from "./../assets/logo.png";
 const Header = () => {
+  const navigate = useNavigate();
   const { RiPhoneFill, MdEmail, BsFillHandbagFill, FaUserCircle } = icons;
   return (
     <div className="w-main h-[110px] py-[35px] flex justify-between">
-      {/* <img src="" alt="logo" className="object-contain" /> */}
-      <Link to={`/${path.HOME}`}>
-        <div>Ecomemerce</div>
-      </Link>
+      <div className="flex items-center">
+        <Link to={`/${path.HOME}`}>
+          <img src={logo} alt="logo" className="object-contain h-[80px]" />
+        </Link>
+      </div>
 
       <div className="flex text-[13px]">
         <div className="flex flex-col px-6 border-r">
@@ -27,12 +30,18 @@ const Header = () => {
           </span>
           <span>Online Support 24/7</span>
         </div>
-        <div className="flex items-center justify-center gap-2 px-6 border-r">
-          <BsFillHandbagFill color="red" />
+
+        <div
+          className="flex items-center justify-center gap-2 px-6 border-r cursor-pointer"
+          onClick={() => navigate(`${path.CART}`)}
+        >
           <span>0 items</span>
+          <BsFillHandbagFill color="red" />
         </div>
-        <div className="flex items-center justify-center px-6 ">
+
+        <div className="flex items-center justify-center px-6 cursor-pointer gap-2 text-main">
           <FaUserCircle size={24} />
+          <span className="font-semibold">Profile</span>
         </div>
       </div>
     </div>

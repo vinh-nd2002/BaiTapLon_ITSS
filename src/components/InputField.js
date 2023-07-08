@@ -26,7 +26,13 @@ const InputField = ({
           setValue((prev) => ({ ...prev, [nameKey]: e.target.value }))
         }
         placeholder={placeholder}
+        onFocus={() => setInvalidFields([])}
       />
+      {invalidFields?.some((ele) => ele.nameKey === nameKey) && (
+        <small className="text-[10px] italic text-main">
+          {invalidFields.find((ele) => ele.nameKey === nameKey).mes}
+        </small>
+      )}
     </div>
   );
 };

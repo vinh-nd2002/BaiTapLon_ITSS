@@ -3,22 +3,20 @@ import { getProducts } from "../apis";
 import ProductItem from "./ProductItem";
 
 const FeatureProduct = () => {
-  const [featureProducts, setFeatureProducts] = useState(null);
-  const fetchProducts = async () => {
-    const response = await getProducts({
-      limit: 9,
-      "totalRatings[gte]": 4,
-      sort: "-totalRatings",
-    });
+  // const [featureProducts, setFeatureProducts] = useState(null);
+  // const fetchProducts = async () => {
+  //   const response = await getProducts({
+  //     limit: 9,
+  //   });
 
-    if (response.success) {
-      setFeatureProducts(response.data);
-    }
-  };
+  //   if (response.success) {
+  //     setFeatureProducts(response.data);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+  // useEffect(() => {
+  //   fetchProducts();
+  // }, []);
   return (
     <div className="w-full mb-[15px]">
       <div className="border-main border-b-2 ">
@@ -30,15 +28,15 @@ const FeatureProduct = () => {
         </h3>
       </div>
       <div className="flex flex-wrap mt-[15px] mx-[15x]">
-        {featureProducts?.map((ele) => (
+        {/* {featureProducts.slice(0, 6).map((ele) => (
           <ProductItem
-            key={ele._id}
+            key={ele.id}
             title={ele.title}
             price={ele.price}
-            thumb={ele.thumb}
+            thumb={ele.thumbnail}
             totalRatings={ele.totalRatings}
           />
-        ))}
+        ))} */}
       </div>
     </div>
   );

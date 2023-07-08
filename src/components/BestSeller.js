@@ -3,6 +3,7 @@ import { getProducts } from "../apis/product";
 
 import Slider from "react-slick";
 import ProductCard from "./ProductCard";
+import { useSelector } from "react-redux";
 
 var settings = {
   dots: false,
@@ -21,35 +22,36 @@ const tabs = [
 ];
 
 const BestSeller = () => {
-  const [bestSellers, setBestSellers] = useState(null);
-  const [newProducts, setNewProducts] = useState(null);
+  const { bestSellers, lastTests } = useSelector((state) => state.product);
   const [activeTab, setActiveTab] = useState(1);
-  const [products, setProducts] = useState(null);
 
-  const fetchProducts = async () => {
-    const [bestSellers, newProducts] = await Promise.all([
-      getProducts({ sort: "-sold" }),
-      getProducts({ sort: "-createdAt" }),
-    ]);
-    if (bestSellers.success) {
-      setBestSellers(bestSellers);
-      setProducts(bestSellers);
-    }
-    if (newProducts.success) setNewProducts(newProducts);
-  };
+  useEffect(() => {}, [activeTab]);
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  useEffect(() => {
+  const renderProducts = () => {
     if (activeTab === 1) {
-      setProducts(bestSellers);
+      return (
+        bestSellers &&
+        bestSellers.map((ele) => (
+          <ProductCard
+            key={ele.id}
+            product={ele}
+            labelTab={activeTab === 1 ? true : false}
+          />
+        ))
+      );
+    } else {
+      return (
+        lastTests &&
+        lastTests.map((ele) => (
+          <ProductCard
+            key={ele.id}
+            product={ele}
+            labelTab={activeTab === 1 ? true : false}
+          />
+        ))
+      );
     }
-    if (activeTab === 2) {
-      setProducts(newProducts);
-    }
-  }, [activeTab]);
+  };
 
   return (
     <div className="mt-5 mb-10">
@@ -71,17 +73,7 @@ const BestSeller = () => {
         ))}
       </div>
       <div>
-        <Slider {...settings}>
-          {products &&
-            products.data.map((ele) => (
-              <ProductCard
-                key={ele._id}
-                product={ele}
-                labelTab={activeTab === 1 ? true : false}
-                // labelIcon={activeTab === 1 ? bestSellerLabel : newLabel}
-              />
-            ))}
-        </Slider>
+        <Slider {...settings}>{renderProducts()}</Slider>
       </div>
     </div>
   );

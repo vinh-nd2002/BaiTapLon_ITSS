@@ -13,3 +13,9 @@ export const apiRegister = (data) =>
     method: "POST",
     data,
   });
+
+export const apiGetCurrent = () =>
+  axios({
+    url: "/users/current",
+    method: "GET",
+  });

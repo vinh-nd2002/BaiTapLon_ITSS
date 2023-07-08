@@ -9,14 +9,23 @@ import {
   DetailProduct,
   Services,
   Products,
+  Cart,
 } from "./pages/public";
 import path from "./utils/path";
 import { useDispatch } from "react-redux";
 import { getCategories } from "./stores/category/categoryAction";
+import {
+  getProducts,
+  getProductsBestSeller,
+  getProductsLatest,
+} from "./stores/product/productAction";
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCategories());
+    dispatch(getProducts());
+    dispatch(getProductsBestSeller());
+    dispatch(getProductsLatest());
   }, [dispatch]);
 
   return (
@@ -27,11 +36,12 @@ function App() {
           <Route path={path.BLOGS} element={<Blogs />}></Route>
           <Route path={path.FAQS} element={<FAQs />}></Route>
           <Route
-            path={path.DETAIL_PRODUCT__PID__TITLE}
+            path={path.DETAIL_PRODUCT__CATEGORY__PID__TITLE}
             element={<DetailProduct />}
           ></Route>
           <Route path={path.OUR_SERVICES} element={<Services />}></Route>
           <Route path={path.PRODUCTS} element={<Products />}></Route>
+          <Route path={path.CART} element={<Cart />}></Route>
         </Route>
         <Route path={path.LOGIN} element={<Login />}></Route>
       </Routes>

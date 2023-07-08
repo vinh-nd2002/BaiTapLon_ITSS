@@ -5,3 +5,7 @@ export const getCategories = () =>
     url: "/categories",
     method: "GET",
   });
+
+export const getCategoryWithProducts = () =>{
+  
+}
