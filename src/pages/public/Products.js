@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { createSearchParams, useNavigate, useParams } from "react-router-dom";
-import { Breadcrumbs, Pagination, ProductCard } from "../../components";
+import { Breadcrumbs, Button, Pagination, ProductCard } from "../../components";
 import { getProducts } from "../../apis";
 import { renderStarFromNumber } from "../../utils/helpers";
 
@@ -14,56 +14,82 @@ const Products = () => {
   const [totalRatings, setTotalRatings] = useState(null);
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const fetchProducts = async () => {
-    const response = await getProducts(
-      totalRatings ? { "totalRatings[gte]": totalRatings } : null
-    );
-    if (response.success) {
-      setProducts(response.data);
-      setTotalItems(response.totals);
+  const createParams = () => {
+    if (minPrice && maxPrice && minPrice > maxPrice) {
+      alert("Sai thông tin giá tiền");
+      return null;
     }
-  };
-
-  const handleFilter = () => {
-    console.log(`products with price from ${minPrice} to ${maxPrice}`);
-  };
-
-  useEffect(() => {
-    fetchProducts();
+    const params = {};
     if (totalRatings) {
-      navigate({
-        pathname: `/san-pham/${category}`,
-        search: createSearchParams({ totalRatings: totalRatings }).toString(),
-      });
-    } else {
-      navigate({
-        search: "",
-      });
+      params["minRating"] = totalRatings;
     }
-    window.scrollTo(0, 0);
-  }, [totalRatings]);
+    if (minPrice) {
+      params["minPrice"] = minPrice;
+    }
+    if (maxPrice) {
+      params["maxPrice"] = maxPrice;
+    }
+    params.page = currentPage;
+    return params;
+  };
+
+  const params = useMemo(
+    () => createParams(),
+    [totalRatings, minPrice, maxPrice, currentPage]
+  );
+
+  const handleFilter = useCallback(async () => {
+    const params = createParams();
+    getProducts(params).then((response) => {
+      if (response.success) {
+        setProducts(response.data);
+        setTotalItems(response.totalItems);
+      } else {
+        setProducts([]);
+        setTotalItems(null);
+      }
+    });
+    navigate({
+      pathname: `/san-pham/${category}`,
+      search: createSearchParams(params).toString(),
+    });
+  }, [params, currentPage]);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const newTotalRatings = params.get("totalRatings");
-    setTotalRatings(newTotalRatings);
-  }, [window.location.search]);
+    handleFilter();
+    window.scrollTo(0, 0);
+  }, [totalRatings, minPrice, maxPrice, currentPage]);
 
   const handleChangePrice = useCallback(
     (e, input) => {
-      if (!Number(e.target.value) || Number(e.target.value) < 1) {
-        return;
-      }
-      if (input === "min") {
-        setMinPrice(e.target.value);
-      } else if (input === "max") {
-        setMaxPrice(e.target.value);
+      const value = e.target.value;
+      const isValid = !isNaN(value) && Number(value) >= 0;
+      if (isValid) {
+        if (input === "min") {
+          setMinPrice(value);
+        } else if (input === "max") {
+          setMaxPrice(value);
+        }
+      } else {
+        e.target.value = "";
       }
     },
     [minPrice, maxPrice]
   );
 
+  const renderProducts = () => {
+    if (products) {
+      return products.map((ele) => (
+        <div className="w-1/5 gap-2" key={ele.id}>
+          <ProductCard product={ele} />
+        </div>
+      ));
+    } else {
+      return <div className="text-xl h-[20px] text-black">No data</div>;
+    }
+  };
   return (
     <div className="w-full mt-[-1px]">
       <div className="h-[80px] bg-gray-200 flex justify-center items-center">
@@ -89,7 +115,7 @@ const Products = () => {
           </div>
           <div>
             <h5>Price</h5>
-            <div className="">
+            <div className="mr-4">
               <div className="flex justify-between items-center">
                 <input
                   className="w-[45%] outline-none p-2 border"
@@ -107,27 +133,29 @@ const Products = () => {
                   placeholder="To"
                 />
               </div>
-              <button className="price-filter-button" onClick={handleFilter}>
-                Áp dụng
-              </button>
+              <Button
+                title="Áp dụng"
+                className="mt-2 p-2 text-white bg-main font-semibold w-full"
+                onClick={handleFilter}
+              />
             </div>
           </div>
         </div>
         <div className="w-4/5">
           <div className="flex flex-wrap border-l border-gray-400  pt-2 pl-2">
-            {products &&
-              products.map((ele) => (
-                <div className="w-1/5 gap-2" key={ele.id}>
-                  <ProductCard product={ele} />
-                </div>
-              ))}
+            {renderProducts()}
           </div>
-          <div className="flex justify-center my-4">
-            <Pagination totalItems={totalItems} />
-          </div>
+          {totalItems && (
+            <div className="flex justify-center my-4">
+              <Pagination
+                totalItems={totalItems}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+              />
+            </div>
+          )}
         </div>
       </div>
-      <div className="mb-[500px]"></div>
     </div>
   );
 };

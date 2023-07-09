@@ -6,4 +6,8 @@ export const getShops = () =>
     method: "GET",
   });
 
-
+export const getShopsTop = () =>
+  axios({
+    url: "/shops/top",
+    method: "GET",
+  });

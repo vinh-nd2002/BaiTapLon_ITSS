@@ -6,11 +6,11 @@ import {
   useParams,
   useSearchParams,
 } from "react-router-dom";
-const PagItem = ({ children }) => {
+const PagItem = ({ children, setCurrentPage }) => {
   const [params] = useSearchParams();
   const navigate = useNavigate();
 
-  const { category, page } = useParams();
+  const { category } = useParams();
   const handlePagination = () => {
     let param = [];
     for (let i of params.entries()) param.push(i);
@@ -18,8 +18,7 @@ const PagItem = ({ children }) => {
     const queries = {};
     for (let i of param) queries[i[0]] = i[1];
     if (Number(children)) queries.page = children;
-
-    console.log(queries);
+    setCurrentPage(queries.page);
     navigate({
       pathname: `/san-pham/${category}`,
       search: createSearchParams(queries).toString(),

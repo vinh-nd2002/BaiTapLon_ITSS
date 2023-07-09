@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 const Sidebar = () => {
   const { categories } = useSelector((state) => state.category);
 
+
   return (
     <div className="flex flex-col border border-gray-300">
       {categories &&

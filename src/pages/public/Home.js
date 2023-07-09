@@ -2,7 +2,6 @@ import React from "react";
 import {
   Banner,
   BestSeller,
-  FeatureProduct,
   FlashSale,
   Services,
   ShopMall,
@@ -23,7 +22,6 @@ const Home = () => {
       <div>
         <FlashSale />
         <BestSeller />
-        <FeatureProduct />
         <ShopMall />
         <Services />
       </div>

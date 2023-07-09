@@ -20,9 +20,9 @@ export default function Login() {
     email: "",
     password: "",
     username: "",
-    firstName: "",
-    lastName: "",
-    numberPhone: "",
+    // firstName: "",
+    // lastName: "",
+    // numberPhone: "",
   });
   const [isLogin, setIsLogin] = useState(true);
 
@@ -31,14 +31,15 @@ export default function Login() {
       email: "",
       password: "",
       username: "",
-      firstName: "",
-      lastName: "",
-      numberPhone: "",
+      // firstName: "",
+      // lastName: "",
+      // numberPhone: "",
     });
   };
   const [invalidFields, setInvalidFields] = useState([]);
   const handleSubmit = useCallback(async () => {
-    const { username, firstName, lastName, numberPhone, ...data } = payload;
+    const { username, ...data } = payload;
+    // const { username, firstName, lastName, numberPhone, ...data } = payload;
 
     const isValids = isLogin
       ? validate(data, setInvalidFields)
@@ -47,34 +48,29 @@ export default function Login() {
       if (isLogin === true) {
         const response = await apiLogin(data);
         if (response.success) {
-          localStorage.setItem("accessToken", response.accessToken);
+          localStorage.setItem("accessToken", response.token);
           localStorage.setItem("isLoggedIn", true);
           dispatch(
             loginReducer({
               isLoggedIn: response.success,
-              accessToken: response.accessToken,
+              accessToken: response.token,
             })
           );
 
-          const result = await apiGetCurrent();
-          console.log(result);
           navigate(`/${path.HOME}`);
         } else {
-          Swal.fire("Oops!", response.mes, "error");
+          Swal.fire("Oops!", "Thông tin không đúng", "error");
         }
       } else {
-        const response = await apiRegister({
-          firstName,
-          lastName,
-          numberPhone,
-          ...data,
-        });
-        if (response.status) {
-          Swal.fire("Congratulation", response.mes, "success").then(() => {
-            setIsLogin(true);
-          });
+        const response = await apiRegister(payload);
+        if (response.success) {
+          Swal.fire("Congratulation", "Đăng ký thành công", "success").then(
+            () => {
+              setIsLogin(true);
+            }
+          );
         } else {
-          Swal.fire("Oops!", response.mes, "error");
+          Swal.fire("Oops!", "Đã xảy ra lỗi", "error");
         }
       }
     }
@@ -102,49 +98,11 @@ export default function Login() {
 
           {!isLogin && (
             <div>
-              <div className="flex justify-between gap-2">
-                <div className="flex flex-col mb-2">
-                  <InputField
-                    type="text"
-                    setValue={setPayload}
-                    placeholder="Enter your first name"
-                    value={payload.firstName}
-                    nameKey="firstName"
-                    label="First Name"
-                    invalidFields={invalidFields}
-                    setInvalidFields={setInvalidFields}
-                  />
-                </div>
-                <div className="flex flex-col mb-2">
-                  <InputField
-                    type="text"
-                    setValue={setPayload}
-                    placeholder="Enter your last name"
-                    value={payload.lastName}
-                    nameKey="lastName"
-                    label="Last Name"
-                    invalidFields={invalidFields}
-                    setInvalidFields={setInvalidFields}
-                  />
-                </div>
-              </div>
               <div className="flex flex-col mb-2">
                 <InputField
                   type="text"
                   setValue={setPayload}
-                  placeholder="Enter your number phone"
-                  value={payload.numberPhone}
-                  nameKey="numberPhone"
-                  label="Number Phone"
-                  invalidFields={invalidFields}
-                  setInvalidFields={setInvalidFields}
-                />
-              </div>
-              <div className="flex flex-col mb-2">
-                <InputField
-                  type="text"
-                  setValue={setPayload}
-                  placeholder="Enter your username"
+                  placeholder="Nhập username"
                   value={payload.username}
                   nameKey="username"
                   invalidFields={invalidFields}
@@ -156,7 +114,7 @@ export default function Login() {
           <div className="flex flex-col mb-2">
             <InputField
               type="text"
-              placeholder="Enter your email"
+              placeholder="Nhập email"
               value={payload.email}
               nameKey="email"
               setValue={setPayload}
@@ -168,7 +126,7 @@ export default function Login() {
             <InputField
               type="password"
               setValue={setPayload}
-              placeholder="Enter your password"
+              placeholder="Nhật mật khẩu"
               value={payload.password}
               nameKey="password"
               invalidFields={invalidFields}
@@ -178,13 +136,13 @@ export default function Login() {
           {isLogin ? (
             <Button
               className="w-full py-3 mt-4 bg-main hover:bg-main relative text-white"
-              title="Login"
+              title="Đăng nhập"
               handleOnClick={handleSubmit}
             />
           ) : (
             <Button
               className="w-full py-3 mt-4 bg-main hover:bg-main relative text-white"
-              title="Sign up"
+              title="Đăng ký"
               handleOnClick={handleSubmit}
             />
           )}
@@ -203,28 +161,28 @@ export default function Login() {
             {isLogin && (
               <div className="flex items-center">
                 <span className="mr-2 cursor-pointer text-xs hover:underline hover:text-blue-600">
-                  Forgot password?
+                  Quên mật khẩu?
                 </span>
               </div>
             )}
             {isLogin ? (
               <p className="text-center mt-4 text-xs ">
-                Not a member?
+                Bạn chưa có tài khoản?
                 <span
                   className=" ml-4 hover:underline cursor-pointer text-sm font-medium text-main hover:text-blue-600"
                   onClick={() => setIsLogin(false)}
                 >
-                  Sign up now!!!
+                  Đăng ký ngay!!!
                 </span>
               </p>
             ) : (
               <p className="text-center mt-4 text-xs ">
-                Already have an account?
+                Bạn đã có tài khoản?
                 <span
                   className=" ml-4 hover:underline cursor-pointer text-sm font-medium text-main hover:text-blue-600"
                   onClick={() => setIsLogin(true)}
                 >
-                  Login now!!!
+                  Đăng nhập ngay!!!
                 </span>
               </p>
             )}

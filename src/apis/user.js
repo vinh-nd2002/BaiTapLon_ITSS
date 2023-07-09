@@ -2,20 +2,20 @@ import axios from "./axios";
 
 export const apiLogin = (data) =>
   axios({
-    url: "/users/login",
+    url: "/login",
     method: "POST",
     data,
   });
 
 export const apiRegister = (data) =>
   axios({
-    url: "/users/register",
+    url: "/register",
     method: "POST",
     data,
   });
 
 export const apiGetCurrent = () =>
   axios({
-    url: "/users/current",
+    url: "/current",
     method: "GET",
   });

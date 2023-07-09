@@ -29,7 +29,7 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div className="min-h-screen font-main">
+    <div className="min-h-screen font-main ">
       <Routes>
         <Route path={path.PUBLIC} element={<Public />}>
           <Route path={path.HOME} element={<Home />}></Route>

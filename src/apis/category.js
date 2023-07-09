@@ -6,6 +6,4 @@ export const getCategories = () =>
     method: "GET",
   });
 
-export const getCategoryWithProducts = () =>{
-  
-}
+

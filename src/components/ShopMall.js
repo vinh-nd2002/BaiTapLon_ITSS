@@ -1,27 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { getShops } from "../apis/shop";
+import { getShopsTop } from "../apis/shop";
 import ShopItem from "./ShopItem";
-// import Slider from "react-slick";
-
-// var settings = {
-//   dots: false,
-//   infinite: true,
-//   speed: 500,
-//   slidesToShow: 4,
-//   slidesToScroll: 2,
-//   autoplay: true,
-//   autoplaySpeed: 3000,
-//   cssEase: "linear",
-//   rows: 3,
-//   arrows: false,
-// };
 
 const ShopMall = () => {
   const [shopsMall, setShopsMall] = useState(null);
   const fetchShopsMall = async () => {
-    const response = await getShops({
-      limit: 9,
-    });
+    const response = await getShopsTop();
     if (response.success) {
       setShopsMall(response.data);
     }

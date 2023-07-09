@@ -5,6 +5,7 @@ export const cartSlice = createSlice({
     shops: JSON.parse(localStorage.getItem("cart")) || [],
     isLoading: false,
     errorMessage: null,
+    totalItems: 0,
   },
   reducers: {
     addProductsToCart: (state, action) => {
@@ -45,14 +46,23 @@ export const cartSlice = createSlice({
       }
       localStorage.setItem("cart", JSON.stringify(state.shops));
     },
-  },
-  getTotalItems: (state, action) => {
-    return state.shops.reduce((total, shop) => {
-      return total + shop.products.length;
-    }, 0);
+    getTotalItems: (state, action) => {
+      state.totalItems = state.shops.reduce((total, shop) => {
+        return total + shop.products.length;
+      }, 0);
+    },
+    checkoutSuccess: (state, action) => {
+      console.log(action.payload.id);
+      const filteredShops = state.shops.filter(
+        (shop) => +shop.id !== +action.payload.id
+      );
+      state.shops = [...filteredShops];
+      localStorage.setItem("cart", JSON.stringify(state.shops));
+    },
   },
 });
 
-export const { addProductsToCart } = cartSlice.actions;
+export const { addProductsToCart, getTotalItems, checkoutSuccess } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

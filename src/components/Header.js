@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import icons from "./../utils/icons";
 import { Link, useNavigate } from "react-router-dom";
 import path from "./../utils/path";
 import logo from "./../assets/logo.png";
+import { useDispatch, useSelector } from "react-redux";
+import { getTotalItems } from "../stores/cart/cartSlice";
 const Header = () => {
   const navigate = useNavigate();
   const { RiPhoneFill, MdEmail, BsFillHandbagFill, FaUserCircle } = icons;
+
+  const { totalItems } = useSelector((state) => state.cart);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getTotalItems());
+  }, [dispatch]);
+
   return (
     <div className="w-main h-[110px] py-[35px] flex justify-between">
       <div className="flex items-center">
@@ -35,7 +46,7 @@ const Header = () => {
           className="flex items-center justify-center gap-2 px-6 border-r cursor-pointer"
           onClick={() => navigate(`${path.CART}`)}
         >
-          <span>0 items</span>
+          <span>{totalItems} items</span>
           <BsFillHandbagFill color="red" />
         </div>
 

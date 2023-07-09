@@ -44,7 +44,7 @@ export const slugifyTitle = (title) => {
 };
 
 export const formatMoney = (number) =>
-Number((+number).toFixed(2)).toLocaleString();
+  Number((+number).toFixed(2)).toLocaleString();
 export const renderStarFromNumber = (number, textSize) => {
   const stars = [];
 
@@ -62,7 +62,7 @@ export const validate = (payload, setInvalidFields) => {
   const formatPayload = Object.entries(payload);
 
   for (let arr of formatPayload) {
-    if (arr[1].trim() === "") {
+    if (arr[1].trim() === "" || !arr[1]) {
       invalids++;
       setInvalidFields((prev) => [
         ...prev,
@@ -85,13 +85,13 @@ export const validate = (payload, setInvalidFields) => {
         }
         break;
       case "password":
-        if (arr[1].length < 8) {
+        if (arr[1].length < 4) {
           invalids++;
           setInvalidFields((prev) => [
             ...prev,
             {
               nameKey: arr[0],
-              mes: "Password must be greater than 8 characters",
+              mes: "Password must be greater than 4 characters",
             },
           ]);
         }

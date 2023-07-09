@@ -4,7 +4,7 @@ export const userSlice = createSlice({
   name: "user",
   initialState: {
     isLoggedIn: false,
-    current: null,
+    current: localStorage.getItem("current") || null,
     accessToken: null,
     isLoading: false,
     errorMessage: null,
@@ -19,6 +19,10 @@ export const userSlice = createSlice({
       state.isLoggedIn = false;
       state.current = null;
       state.accessToken = null;
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("cart");
+      localStorage.removeItem("current");
     },
   },
   extraReducers: (builder) => {
@@ -33,6 +37,7 @@ export const userSlice = createSlice({
       // Tắt trạng thái loading, lưu thông tin user vào store
       state.isLoading = false;
       state.current = action.payload.data;
+      localStorage.setItem("current", action.payload.data);
     });
 
     // Khi thực hiện action login thất bại (Promise rejected)
