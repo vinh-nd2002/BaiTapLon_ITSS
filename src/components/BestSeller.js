@@ -17,8 +17,8 @@ var settings = {
 };
 
 const tabs = [
-  { id: 1, name: "Best seller" },
-  { id: 2, name: "new arrivals" },
+  { id: 1, name: "Bán chạy" },
+  { id: 2, name: "Hàng hot" },
 ];
 
 const BestSeller = () => {

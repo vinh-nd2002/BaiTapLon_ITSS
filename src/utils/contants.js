@@ -2,11 +2,11 @@ import icons from "./icons";
 import path from "./path";
 
 export const navigation = [
-  { id: 1, value: "HOME", path: `/${path.HOME}` },
-  { id: 2, value: "PRODUCTS", path: `/${path.PRODUCTS}` },
+  { id: 1, value: "TRANG CHỦ", path: `/${path.HOME}` },
+  { id: 2, value: "SẢN PHẨM", path: `/${path.PRODUCTS}` },
   { id: 3, value: "BLOGS", path: `/${path.BLOGS}` },
-  { id: 4, value: "OUR SERVICES", path: `/${path.OUR_SERVICES}` },
-  { id: 5, value: "FAQS", path: `/${path.FAQS}` },
+  { id: 4, value: "VỀ CHÚNG TÔI", path: `/${path.OUR_SERVICES}` },
+  { id: 5, value: "HỎI ĐÁP", path: `/${path.FAQS}` },
 ];
 
 const { FaShieldAlt, FaTruck, AiFillGift, BsFillReplyFill, BiSupport } = icons;
@@ -46,18 +46,71 @@ export const productsExtraList = [
 export const productTabs = [
   {
     id: 1,
-    name: "Description",
+    name: "MÔ TẢ",
   },
   {
     id: 2,
-    name: "Delivery",
+    name: "ĐỊA ĐIỂM",
   },
   {
     id: 3,
-    name: "Payment",
+    name: "THANH TOÁN",
   },
   {
     id: 4,
-    name: "Review",
+    name: "NHẬN XÉT",
+  },
+];
+
+const { MdDashboard, HiUserGroup, FiLogOut } = icons;
+
+export const adminSideBar = [
+  {
+    id: 1,
+    type: "SINGLE",
+    text: "Dashboard",
+    path: `${path.DASHBOARD}`,
+    icon: <MdDashboard />,
+  },
+
+  {
+    id: 2,
+    type: "SINGLE",
+    text: "Quản lý người dùng",
+    path: `${path.MANAGE_USERS}`,
+    icon: <HiUserGroup />,
+  },
+
+  {
+    id: 3,
+    type: "SINGLE",
+    text: "Quản lý shop",
+    path: `${path.MANAGE_SHOPS}`,
+    icon: <HiUserGroup />,
+  },
+
+  // {
+  //   id: 4,
+  //   type: "PARENT",
+  //   text: "Quản lý người dùng",
+  //   path: `${path.DASHBOARD}`,
+  //   icon: <HiUserGroup />,
+  //   submenu: [
+  //     {
+  //       text: "Yêu cầu 1",
+  //       path: `${path.CREATE_SHOP}`,
+  //     },
+  //     {
+  //       text: "Yêu cầu 2",
+  //       path: `${path.CREATE_SHOP}`,
+  //     },
+  //   ],
+  // },
+  {
+    id: 4,
+    type: "SINGLE",
+    text: "Đăng xuất",
+    path: `/${path.LOGIN}`,
+    icon: <FiLogOut />,
   },
 ];

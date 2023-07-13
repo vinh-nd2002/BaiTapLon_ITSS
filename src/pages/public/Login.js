@@ -5,13 +5,15 @@ import { AiFillFacebook } from "react-icons/ai";
 import background from "./../../assets/background.jpeg";
 import logo from "./../../assets/logo.png";
 import { Button, InputField } from "../../components";
-import { apiGetCurrent, apiLogin, apiRegister } from "../../apis/user";
+import { apiLogin, apiRegister } from "../../apis/user";
 import Swal from "sweetalert2";
 import path from "./../../utils/path";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginReducer } from "./../../stores/users/userSlice";
 import { validate } from "../../utils/helpers";
+import { showModal } from "../../stores/app/appSlice";
+import Loading from "../../components/Loading";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -46,7 +48,9 @@ export default function Login() {
       : validate(payload, setInvalidFields);
     if (isValids === 0) {
       if (isLogin === true) {
+        dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
         const response = await apiLogin(data);
+        dispatch(showModal({ isShowModal: false, modalChildren: null }));
         if (response.success) {
           localStorage.setItem("accessToken", response.token);
           localStorage.setItem("isLoggedIn", true);
@@ -54,15 +58,24 @@ export default function Login() {
             loginReducer({
               isLoggedIn: response.success,
               accessToken: response.token,
+              role: response.user.role,
             })
           );
-
-          navigate(`/${path.HOME}`);
+          if (response.user.role === 1) {
+            navigate(`/${path.ADMIN}/${path.DASHBOARD}`);
+          } else {
+            navigate(`/${path.HOME}`);
+          }
+          //  if(response.user.role === 2 ){
+          //   navigate(`/${path.ADMIN}/${path.DASHBOARD}`);
+          // }
         } else {
           Swal.fire("Oops!", "Thông tin không đúng", "error");
         }
       } else {
+        dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
         const response = await apiRegister(payload);
+        dispatch(showModal({ isShowModal: false, modalChildren: null }));
         if (response.success) {
           Swal.fire("Congratulation", "Đăng ký thành công", "success").then(
             () => {

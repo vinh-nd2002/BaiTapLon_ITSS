@@ -14,9 +14,9 @@ import ahamove from "./../assets/ahamove.png";
 
 const Services = () => {
   return (
-    <div className="flex border-t-2 border-main">
+    <div className="flex border-t-2 border-main mb-4">
       <div className="flex-col flex-wrap flex-2">
-        <h4 className="text-gray-600 mb-5 mt-3">Payment methods</h4>
+        <h4 className="text-gray-600 mb-5 mt-3">Phương thức thanh toán</h4>
         <div className="flex  gap-x-6 ">
           <img src={visa} alt="visa" className="w-[60px] object-contain" />
           <img
@@ -40,7 +40,7 @@ const Services = () => {
       </div>
 
       <div className="flex-col flex-1 ">
-        <h4 className="text-gray-600 mb-5 mt-3">Delivery Services</h4>
+        <h4 className="text-gray-600 mb-5 mt-3">Dịch vụ giao hàng</h4>
         <div className="flex gap-4 flex-wrap">
           <img src={ghn} alt="ghn" className="w-[60px] object-contain" />
           <img src={ninja} alt="ninja" className="w-[60px] object-contain" />
@@ -58,7 +58,7 @@ const Services = () => {
         </div>
       </div>
       <div className="flex-col flex-1">
-        <h4 className="text-gray-600 mb-5 mt-3 ml-6">Verified by</h4>
+        <h4 className="text-gray-600 mb-5 mt-3 ml-6">Đã được kiểm chứng</h4>
         <img
           src={bocongthuong}
           alt="bocongthuong"

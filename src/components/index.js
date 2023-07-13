@@ -23,3 +23,6 @@ export { default as Pagination } from "./Pagination";
 export { default as PagItem } from "./PagItem";
 export { default as CartProduct } from "./CartProduct";
 export { default as ShopItem } from "./ShopItem";
+export { default as Modal } from "./Modal";
+export { default as InputForm } from "./InputForm";
+export * from "./Admin";

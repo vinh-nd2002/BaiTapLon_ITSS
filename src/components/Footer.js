@@ -10,10 +10,10 @@ const Footer = () => {
           <div className="w-main flex justify-between items-center">
             <div className="flex flex-col flex-1">
               <h4 className="text-white font-bold text-[20px]">
-                SIGN UP TO NEWSLETTER
+                NHẬN THÔNG BÁO TỪ CHÚNG TÔI
               </h4>
               <h6 className="text-gray-300">
-                Subscribe now and receive weekly newsletter
+                Đăng ký để nhận thông báo mới mỗi tuần
               </h6>
             </div>
             <div className="flex-1 flex items-center justify-between">

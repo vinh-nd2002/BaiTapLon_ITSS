@@ -14,6 +14,7 @@ import { formatMoney, renderStarFromNumber } from "../../utils/helpers";
 import { productsExtraList } from "../../utils/contants";
 import { addProductsToCart } from "../../stores/cart/cartSlice";
 import { useDispatch } from "react-redux";
+import Swal from "sweetalert2";
 
 var settings = {
   dots: false,
@@ -38,6 +39,8 @@ const DetailProduct = () => {
 
   const fetchProductById = async (pid) => {
     const response = await getProductById(pid);
+
+    console.log(response);
     if (response.success) {
       setProduct(response.data);
       setImageShow(response.data.thumbnail);
@@ -45,7 +48,6 @@ const DetailProduct = () => {
   };
 
   const fetchProductsByCategory = async (category) => {
-    // const response = await getProducts({ category });
     const response = await getProducts();
     if (response.success) {
       setSuggestionProducts(response.data);
@@ -84,6 +86,7 @@ const DetailProduct = () => {
       quantity,
       price: product.price,
       thumb: product.thumbnail,
+      name: product.name,
     };
     const shop = {
       ...product.shop,
@@ -91,6 +94,7 @@ const DetailProduct = () => {
     };
 
     dispatch(addProductsToCart({ shop: shop }));
+    Swal.fire("Thông báo!", "Bạn đã thêm sản phẩm vào giỏ hàng", "success");
   };
 
   return (
@@ -107,7 +111,7 @@ const DetailProduct = () => {
         <div className="w-main m-auto mt-4 flex justify-between gap-4">
           <div className="w-[40%] flex flex-col gap-4">
             <img
-              src={imageShow ? imageShow : product.images}
+              src={imageShow ? imageShow : ""}
               alt={product.name}
               className="w-full h-[480px] object-contain border px-2"
             />
@@ -162,7 +166,9 @@ const DetailProduct = () => {
                     {ele}
                   </li>
                 ))} */}
-                {product.description}
+                <li className="leading-6">{product.description}</li>
+                <li className="leading-6">{product.description}</li>
+                <li className="leading-6">{product.description}</li>
               </ul>
             </div>
             <div>
@@ -201,7 +207,7 @@ const DetailProduct = () => {
             className="flex justify-center items-center font-medium capitalize w-[250px] text-center p-5  border-t-[1px] bg-main text-white 
             "
           >
-            products suggestion
+            gợi ý sản phẩm
           </h3>
         </div>
         {suggestionProducts && <ListProducts products={suggestionProducts} />}

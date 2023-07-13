@@ -3,7 +3,7 @@ import { generateRange } from "../utils/helpers";
 import { PiDotsThreeOutlineFill } from "react-icons/pi";
 const usePagination = (totalItems, currentPage, siblingCount = 1) => {
   const paginationArray = useMemo(() => {
-    const pageSize = process.env.REACT_APP_PRODUCTS_LIMIT || 10;
+    const pageSize = process.env.REACT_APP_PRODUCTS_LIMIT || 15;
     const paginationCount = Math.ceil(totalItems / pageSize);
 
     const totalPaginationItem = siblingCount + 5;

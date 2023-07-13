@@ -19,7 +19,7 @@ const ListProducts = ({ products, slidesToShow, slidesToScroll, rows }) => {
       <div>
         <Slider {...settings}>
           {products &&
-            products?.map((ele) => <ProductCard key={ele._id} product={ele} />)}
+            products?.map((ele) => <ProductCard key={ele.id} product={ele} />)}
         </Slider>
       </div>
     </div>

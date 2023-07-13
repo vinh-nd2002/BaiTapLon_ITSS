@@ -5,6 +5,10 @@ import userSlice from "./users/userSlice";
 import categorySlice from "./category/categorySlice";
 import cartSlice from "./cart/cartSlice";
 import productSlice from "./product/productSlice";
+import appSlice from "./app/appSlice";
+import adminSlice from "./admin/adminSlice";
+import customerSlice from "./customer/customerSlice";
+import shopSlice from "./shop/shopSlice";
 
 const commonConfig = {
   key: "user",
@@ -21,6 +25,10 @@ export const store = configureStore({
     category: categorySlice,
     cart: cartSlice,
     product: productSlice,
+    app: appSlice,
+    admin: adminSlice,
+    customer: customerSlice,
+    shop: shopSlice,
     user: persistReducer(userConfig, userSlice),
   },
 });

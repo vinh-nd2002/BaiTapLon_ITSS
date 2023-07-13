@@ -23,6 +23,6 @@ export const getProductsLatest = async (params) =>
 
 export const getProductById = async (pid) =>
   axios({
-    url: "/products/" + pid,
+    url: `/products/${pid}`,
     method: "get",
   });

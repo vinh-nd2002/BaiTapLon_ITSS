@@ -6,16 +6,18 @@ import flashSaleLabel from "./../assets/flash_sale.png";
 import SelectOption from "./SelectOption";
 
 import icons from "./../utils/icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import path from "../utils/path";
 import { useDispatch } from "react-redux";
 import { addProductsToCart } from "../stores/cart/cartSlice";
+import Swal from "sweetalert2";
 
 const { BsFillHandbagFill, AiFillEye } = icons;
 
 const ProductCard = ({ product, labelTab, flashSale }) => {
   const [isShow, setIsShow] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const category = product.category.name;
   const handleClickOption = (e, product) => {
     e.preventDefault();
@@ -30,6 +32,7 @@ const ProductCard = ({ product, labelTab, flashSale }) => {
       },
     };
     dispatch(addProductsToCart({ shop: shop }));
+    Swal.fire("Thông báo!", "Bạn đã thêm sản phẩm vào giỏ hàng", "success");
   };
 
   return (
@@ -57,7 +60,16 @@ const ProductCard = ({ product, labelTab, flashSale }) => {
                     handleClickOption={handleClickOption}
                     product={product}
                   />
-                  <SelectOption icon={<AiFillEye />} />
+                  <SelectOption
+                    icon={<AiFillEye />}
+                    handleClickOption={() =>
+                      navigate(
+                        `/${path.DETAIL_PRODUCT}/${category.toLowerCase()}/${
+                          product.id
+                        }/${product.slug}`
+                      )
+                    }
+                  />
                 </div>
               )}
 

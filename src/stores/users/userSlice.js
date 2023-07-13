@@ -8,21 +8,23 @@ export const userSlice = createSlice({
     accessToken: null,
     isLoading: false,
     errorMessage: null,
+    role: localStorage.getItem("role") || null,
   },
   reducers: {
     loginReducer: (state, action) => {
       state.isLoggedIn = action.payload.isLoggedIn;
       state.accessToken = action.payload.accessToken;
+      state.role = action.payload.role;
+      localStorage.setItem("role", action.payload.role);
     },
-
     logout: (state, action) => {
       state.isLoggedIn = false;
       state.current = null;
       state.accessToken = null;
       localStorage.removeItem("accessToken");
       localStorage.removeItem("isLoggedIn");
-      localStorage.removeItem("cart");
       localStorage.removeItem("current");
+      localStorage.removeItem("role");
     },
   },
   extraReducers: (builder) => {

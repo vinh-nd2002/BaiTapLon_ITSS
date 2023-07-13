@@ -1,5 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { createSearchParams, useNavigate, useParams } from "react-router-dom";
+import {
+  createSearchParams,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import { Breadcrumbs, Button, Pagination, ProductCard } from "../../components";
 import { getProducts } from "../../apis";
 import { renderStarFromNumber } from "../../utils/helpers";
@@ -87,7 +91,9 @@ const Products = () => {
         </div>
       ));
     } else {
-      return <div className="text-xl h-[20px] text-black">No data</div>;
+      return (
+        <div className="text-xl h-[20px] text-black">Không có sản phẩm nào</div>
+      );
     }
   };
   return (
@@ -100,7 +106,7 @@ const Products = () => {
       </div>
       <div className="w-main p-4 flex justify-between m-auto">
         <div className="w-1/5 flex auto flex-col">
-          <h3>Filter by</h3>
+          <h3>Lọc sản phẩm</h3>
           <div className="flex flex-col">
             {arrStars.map((ele) => (
               <div
@@ -109,12 +115,14 @@ const Products = () => {
                 onClick={() => setTotalRatings(ele)}
               >
                 {renderStarFromNumber(ele - 1, 30)}
-                {ele === 5 ? "" : "above"}
+                <small className="text-[10px]">
+                  {ele === 5 ? "" : `${ele} sao trở lên`}
+                </small>
               </div>
             ))}
           </div>
           <div>
-            <h5>Price</h5>
+            <h5>Giá cả</h5>
             <div className="mr-4">
               <div className="flex justify-between items-center">
                 <input
@@ -122,7 +130,7 @@ const Products = () => {
                   type="number"
                   value={minPrice}
                   onChange={(e) => handleChangePrice(e, "min")}
-                  placeholder="From"
+                  placeholder="Từ"
                 />
                 <span>-</span>
                 <input
@@ -130,7 +138,7 @@ const Products = () => {
                   type="number"
                   value={maxPrice}
                   onChange={(e) => handleChangePrice(e, "max")}
-                  placeholder="To"
+                  placeholder="Đến"
                 />
               </div>
               <Button

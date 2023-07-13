@@ -11,6 +11,8 @@ import Swal from "sweetalert2";
 import { validate } from "../../utils/helpers";
 import { checkout } from "../../apis/invoice";
 import { checkoutSuccess } from "../../stores/cart/cartSlice";
+import { showModal } from "../../stores/app/appSlice";
+import Loading from "../../components/Loading";
 
 const Cart = () => {
   const { shops } = useSelector((state) => state.cart);
@@ -84,10 +86,11 @@ const Cart = () => {
     }
     if (isValids === 0) {
       if (!isLoggedIn) {
-        Swal.fire("Oops!", "Bạn chưa đăng nhập", "error");
+        Swal.fire("Toang!", "Bạn chưa đăng nhập", "error");
         navigate(`/${path.LOGIN}`);
       }
 
+      dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
       const response = await apiCreateDelivery({
         ...deliveryInfo,
         shipping_fee: 30000,
@@ -112,8 +115,9 @@ const Cart = () => {
         };
         const invoice = await apiCreateOrder(orderForm);
         if (invoice.success) {
+          dispatch(showModal({ isShowModal: false, modalChildren: null }));
           Swal.fire(
-            "Congratulation!",
+            "Chúc mừng!",
             "Cảm ơn bạn. Vui lòng xác nhận thông tin thanh toán ^^",
             "success"
           );
@@ -138,11 +142,14 @@ const Cart = () => {
   }, [deliveryInfo, paymentMethod, invoiceInfo]);
 
   const handleSubmitCheckout = async () => {
-    // const response = await checkout(invoiceInfo.id);
-    // console.log(response);
-    dispatch(checkoutSuccess({ id: buy.id }));
-    reset();
-    Swal.fire("Congratulation!", "Bạn đã mua hàng thành công", "success");
+    dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
+    const response = await checkout(invoiceInfo.id);
+    if (response.success) {
+      dispatch(checkoutSuccess({ id: buy.id }));
+      reset();
+      dispatch(showModal({ isShowModal: false, modalChildren: null }));
+      Swal.fire("Chúc mừng!", "Bạn đã mua hàng thành công", "success");
+    }
   };
 
   const renderForm = () => {
