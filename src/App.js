@@ -19,9 +19,24 @@ import {
   getProductsBestSeller,
   getProductsLatest,
 } from "./stores/product/productAction";
-import { AdminLayout, CreateShop, DashBoard, ManageShop, ManageCustomer } from "./pages/admin";
+import {
+  AdminLayout,
+  CreateShop,
+  ManageShop,
+  ManageCustomer,
+  AdminDashBoard,
+} from "./pages/admin";
 import { Profile, UserLayout } from "./pages/customer";
 import { Modal } from "./components";
+import {
+  ShopDashBoard,
+  ManageProduct,
+  ManageCoupon,
+  ManageOrder,
+  ShopLayout,
+  CreateProduct,
+} from "./pages/shop";
+
 function App() {
   const dispatch = useDispatch();
   const { isShowModal, modalChildren } = useSelector((state) => state.app);
@@ -51,10 +66,17 @@ function App() {
         </Route>
         {/* Admin */}
         <Route path={path.ADMIN} element={<AdminLayout />}>
-          <Route path={path.DASHBOARD} element={<DashBoard />} />
+          <Route path={path.ADMIN_DASHBOARD} element={<AdminDashBoard />} />
           <Route path={path.CREATE_SHOP} element={<CreateShop />} />
           <Route path={path.MANAGE_SHOPS} element={<ManageShop />} />
           <Route path={path.MANAGE_USERS} element={<ManageCustomer />} />
+        </Route>
+        <Route path={path.SHOP} element={<ShopLayout />}>
+          <Route path={path.SHOP_DASHBOARD} element={<ShopDashBoard />} />
+          <Route path={path.CREATE_PRODUCT} element={<CreateProduct />} />
+          <Route path={path.MANAGE_PRODUCTS} element={<ManageProduct />} />
+          <Route path={path.MANAGE_COUPONS} element={<ManageCoupon />} />
+          <Route path={path.MANAGE_ORDERS} element={<ManageOrder />} />
         </Route>
         {/* Customer */}
         <Route path={path.USER} element={<UserLayout />}>

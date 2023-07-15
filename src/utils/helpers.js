@@ -109,3 +109,12 @@ export const generateRange = (start, end) => {
   const length = end - start + 1;
   return Array.from({ length }, (_, index) => start + index);
 };
+
+export const previewImage = (file) => {
+  return new Promise((resole, reject) => {
+    const render = new FileReader();
+    render.readAsDataURL(file);
+    render.onload = () => resole(render.result);
+    render.onerror = (error) => reject(error);
+  });
+};

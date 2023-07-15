@@ -26,3 +26,10 @@ export const getProductById = async (pid) =>
     url: `/products/${pid}`,
     method: "get",
   });
+
+export const apiCreateProduct = async (body) =>
+  axios({
+    url: "/products",
+    method: "post",
+    data: body,
+  });

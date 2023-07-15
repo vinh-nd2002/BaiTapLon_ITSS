@@ -1,19 +1,20 @@
 import React, { Fragment, memo, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import logo from "./../../assets/logo.png";
-import { adminSideBar } from "../../utils/contants";
 import clsx from "clsx";
 import { AiFillCaretDown, AiFillCaretRight } from "react-icons/ai";
-import path from "../../utils/path";
-import { logout } from "../../stores/users/userSlice";
+import logo from "./../assets/logo.png";
+import { adminSideBar, shopSideBar } from "../utils/contants";
+import { logout } from "../stores/users/userSlice";
 
 const activeStyle = "px-4 py-2 flex items-center gap-2 font-bold bg-gray-400";
 const notActiveStyle =
   "px-4 py-2 flex items-center gap-2 font-bold hover:bg-gray-400";
 
-const AdminSideBar = () => {
+const SideBarManage = () => {
+  const { role } = useSelector((state) => state.user);
   const [active, setActive] = useState([]);
+  const sidebar = role === 1 ? adminSideBar : shopSideBar;
 
   const dispatch = useDispatch();
   const handleShowTab = (tabId) => {
@@ -23,14 +24,10 @@ const AdminSideBar = () => {
       setActive((prev) => [...prev, tabId]);
     }
   };
-  return (
-    <div className="h-full py-4">
-      <div className="flex flex-col justify-center gap-2 items-center ">
-        <img src={logo} alt="logo" className="object-contain w-[150px]" />
-        <small className="text-white font-bold">Admin workspace</small>
-      </div>
+  const renderSideBar = () => {
+    return (
       <div>
-        {adminSideBar.map((ele) => (
+        {sidebar.map((ele) => (
           <Fragment key={ele.id}>
             {ele.type === "SINGLE" && (
               <NavLink
@@ -68,7 +65,7 @@ const AdminSideBar = () => {
                   <div className="flex flex-col ">
                     {ele.submenu.map((item) => (
                       <NavLink
-                        to={ele.path}
+                        to={item.path}
                         key={item.text}
                         className={({ isActive }) =>
                           clsx(
@@ -89,8 +86,22 @@ const AdminSideBar = () => {
           </Fragment>
         ))}
       </div>
+    );
+  };
+
+  return (
+    <div className="h-full py-4">
+      <div className="flex flex-col justify-center gap-2 items-center ">
+        <img src={logo} alt="logo" className="object-contain w-[150px]" />
+        {role === 1 ? (
+          <small className="text-white font-bold">Admin workspace</small>
+        ) : (
+          <small className="text-white font-bold">Shop workspace</small>
+        )}
+      </div>
+      {renderSideBar()}
     </div>
   );
 };
 
-export default memo(AdminSideBar);
+export default memo(SideBarManage);

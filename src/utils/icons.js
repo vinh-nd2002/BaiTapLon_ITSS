@@ -17,8 +17,13 @@ import {
   BsFillReplyFill,
   BsFillTrashFill,
 } from "react-icons/bs";
-import { FaUserCircle, FaTruck, FaShieldAlt } from "react-icons/fa";
-import { MdEmail, MdDashboard } from "react-icons/md";
+import {
+  FaUserCircle,
+  FaTruck,
+  FaShieldAlt,
+  FaProductHunt,
+} from "react-icons/fa";
+import { MdEmail, MdDashboard, MdOutlineDiscount } from "react-icons/md";
 import { ImLocation } from "react-icons/im";
 import { FiLogOut } from "react-icons/fi";
 import { GrFormNext } from "react-icons/gr";
@@ -50,6 +55,8 @@ const icons = {
   AiOutlineSearch,
   AiOutlineUndo,
   AiOutlineCheck,
+  FaProductHunt,
+  MdOutlineDiscount,
 };
 
 export default icons;

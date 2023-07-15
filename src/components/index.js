@@ -25,4 +25,6 @@ export { default as CartProduct } from "./CartProduct";
 export { default as ShopItem } from "./ShopItem";
 export { default as Modal } from "./Modal";
 export { default as InputForm } from "./InputForm";
-export * from "./Admin";
+export { default as SideBarManage } from "./SideBarManage";
+export { default as Select } from "./Select";
+// export * from "./Admin";

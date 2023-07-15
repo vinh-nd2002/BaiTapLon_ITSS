@@ -62,14 +62,14 @@ export const productTabs = [
   },
 ];
 
-const { MdDashboard, HiUserGroup, FiLogOut } = icons;
+const { MdDashboard, HiUserGroup, FiLogOut,FaProductHunt,MdOutlineDiscount } = icons;
 
 export const adminSideBar = [
   {
     id: 1,
     type: "SINGLE",
     text: "Dashboard",
-    path: `${path.DASHBOARD}`,
+    path: `${path.ADMIN_DASHBOARD}`,
     icon: <MdDashboard />,
   },
 
@@ -88,24 +88,48 @@ export const adminSideBar = [
     path: `${path.MANAGE_SHOPS}`,
     icon: <HiUserGroup />,
   },
+  {
+    id: 4,
+    type: "SINGLE",
+    text: "Đăng xuất",
+    path: `/${path.LOGIN}`,
+    icon: <FiLogOut />,
+  },
+];
 
-  // {
-  //   id: 4,
-  //   type: "PARENT",
-  //   text: "Quản lý người dùng",
-  //   path: `${path.DASHBOARD}`,
-  //   icon: <HiUserGroup />,
-  //   submenu: [
-  //     {
-  //       text: "Yêu cầu 1",
-  //       path: `${path.CREATE_SHOP}`,
-  //     },
-  //     {
-  //       text: "Yêu cầu 2",
-  //       path: `${path.CREATE_SHOP}`,
-  //     },
-  //   ],
-  // },
+export const shopSideBar = [
+  {
+    id: 1,
+    type: "SINGLE",
+    text: "Dashboard",
+    path: `${path.SHOP_DASHBOARD}`,
+    icon: <MdDashboard />,
+  },
+
+  {
+    id: 2,
+    type: "PARENT",
+    text: "Quản lý sản phẩm",
+    // path: `${path.MANAGE_PRODUCTS}`,
+    icon: <FaProductHunt />,
+    submenu: [
+      {
+        text: "Danh sách sản phẩm",
+        path: `${path.MANAGE_PRODUCTS}`,
+      },
+      {
+        text: "Tạo mới sản phẩm",
+        path: `${path.CREATE_PRODUCT}`,
+      },
+    ],
+  },
+  {
+    id: 3,
+    type: "SINGLE",
+    text: "Quản lý mã giảm giá",
+    path: `${path.MANAGE_COUPONS}`,
+    icon: <MdOutlineDiscount />,
+  },
   {
     id: 4,
     type: "SINGLE",

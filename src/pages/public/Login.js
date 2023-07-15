@@ -62,13 +62,12 @@ export default function Login() {
             })
           );
           if (response.user.role === 1) {
-            navigate(`/${path.ADMIN}/${path.DASHBOARD}`);
+            navigate(`/${path.ADMIN}/${path.ADMIN_DASHBOARD}`);
+          } else if (response.user.role === 2) {
+            navigate(`/${path.SHOP}/${path.SHOP_DASHBOARD}`);
           } else {
             navigate(`/${path.HOME}`);
           }
-          //  if(response.user.role === 2 ){
-          //   navigate(`/${path.ADMIN}/${path.DASHBOARD}`);
-          // }
         } else {
           Swal.fire("Oops!", "Thông tin không đúng", "error");
         }

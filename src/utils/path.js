@@ -11,13 +11,20 @@ const path = {
   DETAIL_PRODUCT: "san-pham",
   CART: "gio-hang",
 
-  // Admin
+  // ADMIN
   ADMIN: "admin",
-  DASHBOARD: "dashboard",
+  ADMIN_DASHBOARD: "admin-dashboard",
   MANAGE_USERS: "manage-users",
   MANAGE_SHOPS: "manage-shops",
-  MANAGE_PRODUCTS: "manage-products",
   CREATE_SHOP: "create-shop",
+
+  //SHOP
+  SHOP: "shop",
+  SHOP_DASHBOARD: "shop-dashboard",
+  CREATE_PRODUCT: "create-product",
+  MANAGE_PRODUCTS: "manage-products",
+  MANAGE_COUPONS: "manage-coupons",
+  MANAGE_ORDERS: "manage-orders",
 
   // USER
   PROFILE: "profile",

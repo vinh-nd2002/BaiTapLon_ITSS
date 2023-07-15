@@ -3,12 +3,12 @@ import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
 import path from "./../../utils/path";
 import { SideBarManage } from "../../components";
-const AdminLayout = () => {
+const ShopLayout = () => {
   const { isShowModal, modalChildren } = useSelector((state) => state.admin);
   const { isLoggedIn, role } = useSelector((state) => state.user);
   if (!isLoggedIn) return <Navigate to={`/${path.LOGIN}`} replace={true} />;
 
-  if (+role !== 1) {
+  if (+role !== 2) {
     return <Navigate to={`/${path.HOME}`} replace={true} />;
   }
 
@@ -30,4 +30,4 @@ const AdminLayout = () => {
   );
 };
 
-export default AdminLayout;
+export default ShopLayout;

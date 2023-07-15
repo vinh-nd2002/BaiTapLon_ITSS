@@ -12,8 +12,13 @@ export const getShopsTop = () =>
     url: "/shops/top",
     method: "GET",
   });
+export const getShopById = (id) =>
+  axios({
+    url: `/shops/${id}`,
+    method: "GET",
+  });
 
-  export const apiUpdateShop = (id, body) =>
+export const apiUpdateShop = (id, body) =>
   axios({
     url: `/shops/${id}`,
     method: "PUT",
