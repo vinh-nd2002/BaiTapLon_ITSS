@@ -27,4 +27,6 @@ export { default as Modal } from "./Modal";
 export { default as InputForm } from "./InputForm";
 export { default as SideBarManage } from "./SideBarManage";
 export { default as Select } from "./Select";
+export { default as ProductCardManage } from "./ProductCardManage";
+export { default as InvoiceModal } from "./InvoiceModal";
 // export * from "./Admin";

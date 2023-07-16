@@ -47,7 +47,7 @@ const ManageCustomer = () => {
   const fetchAllUsers = async (params) => {
     dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
     const response = await apiGetAllCustomers(params);
-
+    console.log(response);
     dispatch(showModal({ isShowModal: false, modalChildren: null }));
     if (response.success) {
       setTotalItems(response.totalItems);
@@ -61,7 +61,7 @@ const ManageCustomer = () => {
       setValue("address", edit.address);
       setValue("phone_number", edit.phone_number);
     }
-  },[edit]);
+  }, [edit]);
 
   useEffect(() => {
     const params = {};
@@ -108,7 +108,11 @@ const ManageCustomer = () => {
   const handleUpdateCustomer = async (data) => {
     try {
       dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
-      const response = await apiUpdateCustomer(edit.id, data);
+      const response = await apiUpdateCustomer(edit.id, {
+        ...data,
+        deleted: false,
+      });
+      console.log(response);
       dispatch(showModal({ isShowModal: false, modalChildren: null }));
       if (response.success) {
         setEdit(null);
@@ -155,10 +159,15 @@ const ManageCustomer = () => {
             </thead>
             <tbody className="text-sm">
               {customers &&
-                customers.map((cus, index) => (
+                customers?.map((cus, index) => (
                   <tr
                     key={cus.id}
-                    className="border-y border-main transition-colors cursor-pointer hover:bg-gray-200"
+                    // className="border-y border-main transition-colors cursor-pointer hover:bg-gray-200"
+                    className={
+                      cus.deleted === 0
+                        ? "border-y border-main transition-colors cursor-pointer hover:bg-gray-200"
+                        : "border-y bg-gray-400 transition-colors cursor-pointer border-main"
+                    }
                   >
                     <td className="py-4 text-center">{index + 1}</td>
                     <td className="py-4">
@@ -229,7 +238,7 @@ const ManageCustomer = () => {
                     </td>
                     <td className="py-4">
                       <div className="flex justify-center gap-2 items-center">
-                        <AiFillEye className="cursor-pointer" />
+                        {/* <AiFillEye className="cursor-pointer" /> */}
                         {edit?.id === cus.id ? (
                           <button type="submit">
                             <AiOutlineCheck />
@@ -240,14 +249,14 @@ const ManageCustomer = () => {
                             onClick={() => setUpdateInfo(cus)}
                           />
                         )}
-                        <BsFillTrashFill
-                          className="cursor-pointer"
-                          onClick={() => handleDeleteUser(cus.id)}
-                        />
-                        <AiOutlineUndo
-                          className="cursor-pointer"
-                          // onClick={() => handleDeleteUser(cus.id)}
-                        />
+                        {cus.deleted === 0 ? (
+                          <BsFillTrashFill
+                            className="cursor-pointer"
+                            onClick={() => handleDeleteUser(cus.id)}
+                          />
+                        ) : (
+                          ""
+                        )}
                       </div>
                     </td>
                   </tr>

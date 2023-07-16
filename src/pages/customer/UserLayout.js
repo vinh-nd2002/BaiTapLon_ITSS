@@ -1,15 +1,16 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { Navigate, Outlet } from "react-router-dom";
-import path from "./../../utils/path";
+
+import { Navigation, TopHeader } from "../../components";
+import { Outlet } from "react-router-dom";
 const UserLayout = () => {
-  const { isLoggedIn, current } = useSelector((state) => state.user);
-  if (!isLoggedIn || !current)
-    return <Navigate to={`${path.LOGIN}`} replace={true} />;
+
   return (
-    <div>
-      UserLayout
-      <Outlet />
+    <div className="w-full flex flex-col items-center ">
+      <TopHeader />
+      <Navigation />
+      <div className="w-main">
+        <Outlet />
+      </div>
     </div>
   );
 };

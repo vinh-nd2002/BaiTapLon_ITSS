@@ -1,6 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, CartProduct, InputField } from "../../components";
+import {
+  Button,
+  CartProduct,
+  InputField,
+  InvoiceModal,
+} from "../../components";
 // import { formatMoney } from "../../utils/helpers";
 import { getCurrent } from "../../stores/users/userAction";
 import { apiCreateDelivery } from "../../apis/delivery";
@@ -27,6 +32,8 @@ const Cart = () => {
     receiver_name: current?.customer?.name || "",
     note: "",
   });
+
+  // console.log(current);
 
   const [invoiceInfo, setInvoiceInfo] = useState({
     id: null,
@@ -110,24 +117,25 @@ const Cart = () => {
           note: deliveryInfo.note,
           payment_method: paymentMethod,
           payment_status: "unpaid",
-          customer_coupon_id: current.customer.id,
+          // customer_coupon_id: current.customer.id,
+          customer_coupon_id: null,
           order_items: order_items,
         };
-        const invoice = await apiCreateOrder(orderForm);
-        if (invoice.success) {
-          dispatch(showModal({ isShowModal: false, modalChildren: null }));
+        const result = await apiCreateOrder(orderForm);
+        if (result.success) {
           Swal.fire(
             "Chúc mừng!",
             "Cảm ơn bạn. Vui lòng xác nhận thông tin thanh toán ^^",
             "success"
           );
+          dispatch(showModal({ isShowModal: false, modalChildren: null }));
           const {
             id,
             total_amount,
             payment_method,
             total_amount_decreased,
             total_amount_payable,
-          } = invoice.data;
+          } = result.data;
           setIsOrder(false);
           setInvoiceInfo({
             id,
@@ -136,19 +144,26 @@ const Cart = () => {
             total_amount_decreased,
             total_amount_payable,
           });
+        }else{
+          Swal.fire(
+            "Toang!",
+            "Đã có lỗi xảy ra ^^",
+            "error"
+          );
         }
       }
     }
   }, [deliveryInfo, paymentMethod, invoiceInfo]);
 
   const handleSubmitCheckout = async () => {
-    dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
     const response = await checkout(invoiceInfo.id);
     if (response.success) {
       dispatch(checkoutSuccess({ id: buy.id }));
       reset();
       dispatch(showModal({ isShowModal: false, modalChildren: null }));
       Swal.fire("Chúc mừng!", "Bạn đã mua hàng thành công", "success");
+    } else {
+      Swal.fire("Toang!", "Đã có lỗi xảy ra", "error");
     }
   };
 
@@ -328,7 +343,7 @@ const Cart = () => {
                     <div className="flex items-center gap-4 mt-4">
                       <img
                         src={
-                          shop.logo ||
+                          shop.shop_logo ||
                           "https://incucdep.com/wp-content/uploads/2014/12/logo-thoi-trang.jpg"
                         }
                         className="w-[50px] h-[50px] rounded-full border "
@@ -351,16 +366,16 @@ const Cart = () => {
                   </div>
                   <div className="flex my-3  px-4">
                     <h3 className="font-semibold text-gray-600 text-xs uppercase w-2/5">
-                      Product Details
+                      Danh sách sản phẩm
                     </h3>
                     <h3 className="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 ">
-                      Quantity
+                      Số lượng
                     </h3>
                     <h3 className="font-semibold  text-gray-600 text-xs uppercase w-1/5 text-center">
-                      Price
+                      Giá tiền
                     </h3>
                     <h3 className="font-semibold  text-gray-600 text-xs uppercase w-1/5 text-center">
-                      Total
+                      Tổng tiền
                     </h3>
                   </div>
                   {shop.products &&

@@ -10,7 +10,6 @@ export const appSlice = createSlice({
     lastTests: null,
     errorMessage: "",
   },
-  reducers: {},
   // Code logic xử lý async action
   extraReducers: (builder) => {
     builder.addCase(actions.getProducts.pending, (state) => {
@@ -24,7 +23,7 @@ export const appSlice = createSlice({
 
     builder.addCase(actions.getProducts.rejected, (state, action) => {
       state.isLoading = false;
-      state.errorMessage = action.payload.message;
+      state.errorMessage = action.payload?.message;
     });
 
     builder.addCase(actions.getProductsBestSeller.pending, (state) => {
@@ -41,7 +40,7 @@ export const appSlice = createSlice({
 
     builder.addCase(actions.getProductsBestSeller.rejected, (state, action) => {
       state.isLoading = false;
-      state.errorMessage = action.payload.message;
+      state.errorMessage = action.payload?.message;
     });
 
     builder.addCase(actions.getProductsLatest.pending, (state) => {
@@ -55,7 +54,7 @@ export const appSlice = createSlice({
 
     builder.addCase(actions.getProductsLatest.rejected, (state, action) => {
       state.isLoading = false;
-      state.errorMessage = action.payload.message;
+      state.errorMessage = action.payload?.message;
     });
   },
 });

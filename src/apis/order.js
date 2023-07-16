@@ -6,3 +6,15 @@ export const apiCreateOrder = (body) =>
     method: "POST",
     data: body,
   });
+
+export const apiGetOrders = () =>
+  axios({
+    url: "/orders",
+    method: "GET",
+  });
+
+  export const apiAcceptOrder = (id) =>
+  axios({
+    url: `/orders/${id}`,
+    method: "PUT",
+  });

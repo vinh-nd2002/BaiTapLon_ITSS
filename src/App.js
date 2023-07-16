@@ -10,6 +10,7 @@ import {
   Services,
   Products,
   Cart,
+  Register,
 } from "./pages/public";
 import path from "./utils/path";
 import { useDispatch, useSelector } from "react-redux";
@@ -84,6 +85,7 @@ function App() {
         </Route>
 
         <Route path={path.LOGIN} element={<Login />}></Route>
+        <Route path={path.REGISTER} element={<Register />}></Route>
         <Route path={path.ALL} element={<Home />}></Route>
       </Routes>
     </div>

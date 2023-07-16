@@ -23,7 +23,9 @@ const typeImges = [
 ];
 
 const CreateProduct = () => {
+  const { current } = useSelector((state) => state.user);
   const { categories } = useSelector((state) => state.category);
+  console.log(current);
   const [disable, setDisable] = useState(false);
   const dispatch = useDispatch();
   const {
@@ -165,7 +167,7 @@ const CreateProduct = () => {
     }
 
     body.sold_quantity = 0;
-    body.shop_id = 1;
+    body.shop_id = current.shop.id;
     body.slug = slugifyTitle(data.name);
     dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }));
     const response = await apiCreateProduct(body);

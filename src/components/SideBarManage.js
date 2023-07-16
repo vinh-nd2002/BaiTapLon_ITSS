@@ -90,7 +90,7 @@ const SideBarManage = () => {
   };
 
   return (
-    <div className="h-full py-4">
+    <div className="h-full py-4 w-full">
       <div className="flex flex-col justify-center gap-2 items-center ">
         <img src={logo} alt="logo" className="object-contain w-[150px]" />
         {role === 1 ? (

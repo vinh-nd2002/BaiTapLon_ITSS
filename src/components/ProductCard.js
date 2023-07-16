@@ -75,9 +75,8 @@ const ProductCard = ({ product, labelTab, flashSale }) => {
 
               <img
                 src={
-                  // product.thumbnail
-                  "https://bloganchoi.com/wp-content/uploads/2019/12/vay-xep-ly-3.jpg" ||
-                  "https://t3.ftcdn.net/jpg/04/34/72/82/360_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg"
+                  product.thumbnail ||
+                  "https://bloganchoi.com/wp-content/uploads/2019/12/vay-xep-ly-3.jpg"
                 }
                 alt={product.name}
                 className="h-[200px] object-contain"

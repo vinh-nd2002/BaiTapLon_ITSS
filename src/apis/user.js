@@ -7,9 +7,16 @@ export const apiLogin = (data) =>
     data,
   });
 
-export const apiRegister = (data) =>
+export const apiRegisterCustomer = (data) =>
   axios({
-    url: "/register",
+    url: "/register-customer",
+    method: "POST",
+    data,
+  });
+
+export const apiRegisterShop = (data) =>
+  axios({
+    url: "/register-shop",
     method: "POST",
     data,
   });

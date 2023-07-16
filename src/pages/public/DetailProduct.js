@@ -20,7 +20,7 @@ var settings = {
   dots: false,
   infinite: true,
   speed: 500,
-  slidesToShow: 3,
+  slidesToShow: 4,
   slidesToScroll: 1,
   autoplay: true,
   autoplaySpeed: 5000,
@@ -39,7 +39,6 @@ const DetailProduct = () => {
 
   const fetchProductById = async (pid) => {
     const response = await getProductById(pid);
-
     console.log(response);
     if (response.success) {
       setProduct(response.data);
@@ -117,17 +116,17 @@ const DetailProduct = () => {
             />
             <div className="w-full">
               <Slider {...settings}>
-                {product.images?.map((ele) => (
+                {product.product_images?.map((ele) => (
                   <div
                     className="flex justify-center items-center w-1/3 px-1"
-                    key={ele}
+                    key={ele.id}
                   >
                     <div className="border border-gray-400">
                       <img
-                        src={ele}
+                        src={ele.image_url}
                         alt="sub-product-images"
                         className="m-auto object-contain h-[140px] cursor-pointer"
-                        onClick={() => setImageShow(ele)}
+                        onClick={() => setImageShow(ele.image_url)}
                       />
                     </div>
                   </div>

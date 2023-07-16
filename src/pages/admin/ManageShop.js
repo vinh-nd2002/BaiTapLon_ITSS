@@ -158,7 +158,11 @@ const ManageShop = () => {
                 shops.map((shop, index) => (
                   <tr
                     key={shop.id}
-                    className="border-y border-main hover:bg-gray-200 transition-colors cursor-pointer"
+                    className={
+                      shop.deleted === 0
+                        ? "border-y border-main transition-colors cursor-pointer hover:bg-gray-200"
+                        : "border-y bg-gray-400 transition-colors cursor-pointer border-main"
+                    }
                   >
                     <td className="py-4 text-center">{index + 1}</td>
                     <td className="py-4">
@@ -259,7 +263,7 @@ const ManageShop = () => {
                     <td className="py-4 text-center">{shop.is_verified}</td>
                     <td className="py-4">
                       <div className="flex justify-center gap-2 items-center">
-                        <AiFillEye className="cursor-pointer" />
+                        {/* <AiFillEye className="cursor-pointer" /> */}
                         {edit?.id === shop.id ? (
                           <button type="submit">
                             <AiOutlineCheck />
@@ -270,14 +274,19 @@ const ManageShop = () => {
                             onClick={() => setUpdateInfo(shop)}
                           />
                         )}
-                        <BsFillTrashFill
-                          className="cursor-pointer"
-                          onClick={() => handleDeleteShop(shop.id)}
-                        />
-                        <AiOutlineUndo
+
+                        {shop.deleted === 0 ? (
+                          <BsFillTrashFill
+                            className="cursor-pointer"
+                            onClick={() => handleDeleteShop(shop.id)}
+                          />
+                        ) : (
+                          ""
+                        )}
+                        {/* <AiOutlineUndo
                           className="cursor-pointer"
                           // onClick={() => handleDeleteUser(cus.id)}
-                        />
+                        /> */}
                       </div>
                     </td>
                   </tr>

@@ -3,6 +3,7 @@ const path = {
   HOME: "",
   ALL: "*",
   LOGIN: "login",
+  REGISTER: "register",
   PRODUCTS: "san-pham/:category",
   OUR_SERVICES: "services",
   FAQS: "faqs",

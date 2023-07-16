@@ -33,3 +33,9 @@ export const apiCreateProduct = async (body) =>
     method: "post",
     data: body,
   });
+
+export const apiDeleteProductById = async (pid) =>
+  axios({
+    url: `/products/${pid}`,
+    method: "delete",
+  });

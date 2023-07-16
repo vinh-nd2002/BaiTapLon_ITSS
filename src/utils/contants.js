@@ -126,8 +126,8 @@ export const shopSideBar = [
   {
     id: 3,
     type: "SINGLE",
-    text: "Quản lý mã giảm giá",
-    path: `${path.MANAGE_COUPONS}`,
+    text: "Quản lý đơn hàng",
+    path: `${path.MANAGE_ORDERS}`,
     icon: <MdOutlineDiscount />,
   },
   {
